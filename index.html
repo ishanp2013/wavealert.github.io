@@ -78,7 +78,6 @@ h2 { margin:0 0 10px; font-family:"Bricolage Grotesque", system-ui, sans-serif; 
 .bar strong { font-weight:600; }
 .bar a { font-weight:600; }
 iframe { display:block; width:100%; border:0; background:var(--sheet); }
-#alertFrame { height:clamp(520px, 80vh, 840px); }
 #guardFrame { height:clamp(560px, 82vh, 720px); border:1px solid var(--line); border-radius:12px; }
 .fine { margin:12px 2px 0; color:var(--muted); font-size:13.5px; }
 
@@ -93,6 +92,87 @@ iframe { display:block; width:100%; border:0; background:var(--sheet); }
 .steps h3 { margin:0 0 6px; font-size:21px; letter-spacing:-.01em; }
 .steps p { margin:0; color:var(--muted); }
 .notice { margin-top:30px; padding:12px 16px; background:var(--note-bg); color:var(--note-ink); border-radius:10px; font-size:15px; }
+
+/* seismometer panel (always dark, like an instrument) */
+.tp { background:#050505; color:#f1f1f1; border:1px solid #232323; border-radius:16px; overflow:hidden; font-size:15px; }
+.tp :focus-visible { outline:2px solid #fca5a5; outline-offset:2px; }
+.tp-top { display:flex; justify-content:space-between; align-items:center; gap:12px; padding:14px 20px; border-bottom:1px solid #1f1f1f; }
+.tp-brand { display:flex; align-items:center; gap:12px; min-width:0; }
+.tp-logo { width:42px; height:42px; flex:none; border-radius:10px; background:#151515; display:grid; place-items:center; }
+.tp-logo svg { width:22px; height:22px; stroke:#f1f1f1; fill:none; stroke-width:2; }
+.tp-brand strong { display:block; font-size:17px; line-height:1.25; }
+.tp-brand small { color:#9a9a9a; font-size:13px; }
+.tp-refresh { display:inline-flex; align-items:center; gap:8px; min-height:40px; padding:8px 12px; border:0; border-radius:8px; background:none; color:#f1f1f1; font:inherit; font-weight:600; cursor:pointer; }
+.tp-refresh:hover { background:#151515; }
+.tp-refresh:disabled { opacity:.7; cursor:wait; }
+.tp-refresh svg { width:18px; height:18px; stroke:currentColor; fill:none; stroke-width:2; }
+.tp-refresh.spin svg { animation:tpspin .9s linear infinite; }
+@keyframes tpspin { to { transform:rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .tp-refresh.spin svg { animation:none; } .tp-fill { transition:none !important; } }
+
+.tp-hero { padding:clamp(28px, 5vw, 48px) 20px 20px; text-align:center; }
+.tp-hero h3 { margin:0; font-family:"Bricolage Grotesque", system-ui, sans-serif; font-weight:800; font-size:clamp(28px, 5vw, 44px); line-height:1.1; letter-spacing:-.025em; }
+.tp-hero p { margin:12px auto 0; color:#a1a1a1; max-width:56ch; }
+.tp-form { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:24px; }
+.tp-input { display:flex; align-items:center; gap:10px; flex:1 1 280px; max-width:440px; min-height:46px; padding:0 14px; background:#0b0b0b; border:1px solid #2b2b2b; border-radius:10px; }
+.tp-input:focus-within { border-color:#ef4444; }
+.tp-input svg { width:18px; height:18px; flex:none; stroke:#8a8a8a; fill:none; stroke-width:2; }
+.tp-input input { flex:1; min-width:0; background:none; border:0; outline:0; color:#f1f1f1; font:inherit; font-size:16px; }
+.tp-input input::placeholder { color:#6f6f6f; }
+.tp-add { display:inline-flex; align-items:center; gap:8px; min-height:46px; padding:0 20px; border:1px solid #2b2b2b; border-radius:10px; background:#161616; color:#f1f1f1; font:inherit; font-weight:600; cursor:pointer; }
+.tp-add:hover { background:#1d1d1d; }
+.tp-add:disabled { opacity:.6; cursor:wait; }
+.tp-add svg { width:18px; height:18px; stroke:currentColor; fill:none; stroke-width:2; }
+.tp .tp-msg { min-height:22px; margin:12px auto 0; font-size:14px; color:#a1a1a1; }
+.tp .tp-msg.err { color:#fca5a5; }
+
+.tp-tools { display:flex; gap:12px 28px; flex-wrap:wrap; justify-content:space-between; align-items:center; padding:4px 20px 14px; }
+.tp-tools[hidden] { display:none; }
+.tp-seg { display:inline-flex; align-items:center; gap:6px; flex-wrap:wrap; color:#9a9a9a; font-size:13.5px; }
+.tp-seg span { margin-right:4px; }
+.tp-seg button { min-height:34px; padding:4px 12px; border:1px solid #2b2b2b; border-radius:999px; background:#0e0e0e; color:#cfcfcf; font:inherit; font-size:13.5px; cursor:pointer; }
+.tp-seg button[aria-pressed="true"] { background:#2a1010; border-color:#7f1d1d; color:#fca5a5; }
+
+.tp-list { display:grid; gap:16px; padding:0 20px 24px; }
+.tp-card { position:relative; display:grid; grid-template-columns:auto minmax(0, 1fr); gap:22px; padding:20px; background:#0a0a0a; border:1px solid #262626; border-radius:16px; }
+.tp-gcol { display:flex; align-items:flex-end; align-self:start; gap:16px; }
+.tp-gauge { position:relative; width:50px; height:200px; flex:none; overflow:hidden; border-radius:12px; background:#141414; border:1px solid #2a2a2a; }
+.tp-tick { position:absolute; left:0; right:0; border-top:1px dashed #333; }
+.tp-fill { position:absolute; left:0; right:0; bottom:0; border-radius:0 0 10px 10px; transition:height .6s ease; }
+.tp-read { min-width:112px; padding-bottom:2px; }
+.tp-tier { font-weight:800; letter-spacing:.06em; font-size:15px; }
+.tp-mag { font-size:34px; font-weight:800; line-height:1.1; }
+.tp-unit { color:#8a8a8a; font-size:12px; letter-spacing:.05em; }
+.tp-body { min-width:0; padding-right:36px; }
+.tp-head { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+.tp-head h3 { margin:0; font-size:22px; letter-spacing:-.01em; }
+.tp-badge { display:inline-flex; align-items:center; gap:6px; padding:2px 10px; border:1px solid #7f1d1d; border-radius:999px; background:#2a0f0f; color:#fca5a5; font-size:13px; }
+.tp-badge.none { border-color:#2b2b2b; background:#121212; color:#a1a1a1; }
+.tp-badge svg { width:13px; height:13px; stroke:currentColor; fill:none; stroke-width:2; }
+.tp .tp-line { margin:10px 0 0; color:#d4d4d4; }
+.tp .tp-line.sub { margin-top:4px; color:#7d7d7d; font-size:13.5px; }
+.tp-events { list-style:none; margin:14px 0 0; padding:0; display:grid; gap:6px; }
+.tp-ev { display:grid; grid-template-columns:auto minmax(0, 1fr) auto; gap:12px; align-items:baseline; padding:7px 12px; background:#101010; border-radius:6px; font-size:14.5px; }
+.tp-ev b { font-weight:800; }
+.tp-ev a { color:#e5e5e5; text-decoration:none; overflow-wrap:anywhere; }
+.tp-ev a:hover { text-decoration:underline; }
+.tp-ev time { color:#7d7d7d; font-size:13.5px; white-space:nowrap; }
+.tp-more { margin-top:10px; padding:6px 0; border:0; background:none; color:#fca5a5; font:inherit; font-size:14px; cursor:pointer; }
+.tp-del { position:absolute; top:16px; right:16px; min-width:40px; min-height:40px; padding:8px; border:0; border-radius:8px; background:none; color:#8a8a8a; cursor:pointer; }
+.tp-del:hover { background:#171717; color:#f87171; }
+.tp-del svg { width:18px; height:18px; stroke:currentColor; fill:none; stroke-width:2; }
+.tp-empty, .tp-status { padding:24px 8px 12px; text-align:center; color:#9a9a9a; }
+.tp-chips { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin-top:14px; }
+.tp-chip { min-height:38px; padding:6px 14px; border:1px solid #2b2b2b; border-radius:999px; background:#0e0e0e; color:#e5e5e5; font:inherit; font-size:14px; cursor:pointer; }
+.tp-chip:hover { border-color:#7f1d1d; }
+@media (max-width: 700px) {
+  .tp-card { grid-template-columns:1fr; gap:16px; }
+  .tp-gauge { height:150px; }
+  .tp-body { padding-right:0; }
+  .tp-del { top:12px; right:12px; }
+  .tp-ev { grid-template-columns:auto minmax(0, 1fr); }
+  .tp-ev time { grid-column:2; }
+}
 
 /* footer */
 .foot { border-top:1px solid var(--line); padding-block:30px 44px; color:var(--muted); font-size:14px; }
@@ -156,16 +236,53 @@ iframe { display:block; width:100%; border:0; background:var(--sheet); }
 
   <section class="section wrap" id="alerts">
     <h2>Live alerts</h2>
-    <p class="intro">The WaveAlert alert app, running right here on this page.</p>
-    <div class="frame-wrap">
-      <div class="bar">
-        <strong>WaveAlert live alert app</strong>
-        <a href="https://mindful-quake-alert-live.base44.app" target="_blank" rel="noopener">Open in a new tab</a>
+    <p class="intro">Search any city or country and see its latest earthquake status, straight from the USGS.</p>
+
+    <div class="tp" id="tp">
+      <div class="tp-top">
+        <div class="tp-brand">
+          <span class="tp-logo"><svg viewBox="0 0 24 24" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4l3-8 5 16 3-8h5"/></svg></span>
+          <span><strong>WaveAlert Seismometer</strong><small>Live earthquake monitor</small></span>
+        </div>
+        <button class="tp-refresh" id="tpRefresh" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 0-15.5-6.2L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 15.5 6.2L21 16"/><path d="M21 21v-5h-5"/></svg>
+          <span>Refresh</span>
+        </button>
       </div>
-      <iframe id="alertFrame" src="https://mindful-quake-alert-live.base44.app" title="WaveAlert live alert app"
-        loading="lazy" allow="geolocation; clipboard-write; fullscreen" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+
+      <div class="tp-hero">
+        <h3>Monitor the ground beneath you</h3>
+        <p>Add a city or country to watch its seismic activity. Saved places stay here as live records, and the bar rises when an earthquake is detected.</p>
+        <form class="tp-form" id="tpForm" autocomplete="off">
+          <label class="tp-input">
+            <svg viewBox="0 0 24 24" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <input id="tpInput" type="text" placeholder="Enter a city or country (e.g. Japan)" aria-label="City or country" maxlength="60" enterkeyhint="search">
+          </label>
+          <button class="tp-add" id="tpAdd" type="submit">
+            <svg viewBox="0 0 24 24" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+            <span>Add</span>
+          </button>
+        </form>
+        <p class="tp-msg" id="tpMsg" role="status"></p>
+      </div>
+
+      <div class="tp-tools" id="tpTools" hidden>
+        <div class="tp-seg" role="group" aria-label="Time window">
+          <span>Show</span>
+          <button type="button" data-days="7" aria-pressed="false">7 days</button>
+          <button type="button" data-days="30" aria-pressed="true">30 days</button>
+        </div>
+        <div class="tp-seg" role="group" aria-label="Sort events">
+          <span>Sort events</span>
+          <button type="button" data-sort="latest" aria-pressed="true">Latest</button>
+          <button type="button" data-sort="strongest" aria-pressed="false">Strongest</button>
+        </div>
+      </div>
+
+      <div class="tp-list" id="tpList"></div>
     </div>
-    <p class="fine">If the app does not appear above, the host may block embedding on other sites. Use &ldquo;Open in a new tab&rdquo; to run it in its own window.</p>
+
+    <p class="fine">Earthquakes of M2.5 or higher from the USGS. City lookup uses the free Open-Meteo geocoding service, and cities show earthquakes within 300 km. Countries match the place names the USGS reports, so a few offshore events near a coast may be listed under a sea or ridge name instead. You can also <a href="https://mindful-quake-alert-live.base44.app" target="_blank" rel="noopener">open the original alert app in its own tab</a>.</p>
   </section>
 
   <section class="section wrap" id="quakeguard">
@@ -1052,6 +1169,312 @@ if (typeof module !== &quot;undefined&quot;) module.exports = QuakeEngine;
   try { window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function () { readColors(); draw(); }); } catch (e) {}
   resize();
   if (!reduce) requestAnimationFrame(frame);
+})();
+</script>
+<script>
+/* ---------- seismometer: search a city or country, see its latest earthquake status ---------- */
+(function () {
+  "use strict";
+  var BASE = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/";
+  var FEEDS = { 7: BASE + "2.5_week.geojson", 30: BASE + "2.5_month.geojson" };
+  var GEO = "https://geocoding-api.open-meteo.com/v1/search";
+  var STORE = "wavealert.places.v1";
+  var RADIUS = 300;
+  var SUGGEST = ["Japan", "Nepal", "Chile", "Indonesia", "Tokyo", "California"];
+  function $(id) { return document.getElementById(id); }
+
+  var state = { days: 30, sort: "latest", places: [], feeds: {}, expanded: {}, loadError: false };
+
+  /* ----- saved places live in this browser only ----- */
+  try {
+    var saved = JSON.parse(localStorage.getItem(STORE) || "{}");
+    if (Array.isArray(saved.places)) state.places = saved.places.filter(function (p) { return p && p.key && p.name && p.kind; });
+    if (saved.days === 7 || saved.days === 30) state.days = saved.days;
+    if (saved.sort === "latest" || saved.sort === "strongest") state.sort = saved.sort;
+  } catch (e) {}
+  function save() {
+    try { localStorage.setItem(STORE, JSON.stringify({ places: state.places, days: state.days, sort: state.sort })); } catch (e) {}
+  }
+
+  /* ----- helpers ----- */
+  function norm(s) { return String(s).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ").trim(); }
+  function reEsc(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); }
+  function km(a, b, c, d) {
+    var R = 6371, r = Math.PI / 180, dLat = (c - a) * r, dLon = (d - b) * r;
+    var h = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(a * r) * Math.cos(c * r) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    return 2 * R * Math.asin(Math.sqrt(h));
+  }
+  function rel(ms) {
+    var m = Math.max(0, Math.round((Date.now() - ms) / 60000));
+    if (m < 60) return m + " min ago";
+    if (m < 2880) return Math.floor(m / 60) + " h ago";
+    return new Date(ms).toLocaleDateString();
+  }
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  }
+  function icon(paths) {
+    var s = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    s.setAttribute("viewBox", "0 0 24 24"); s.setAttribute("aria-hidden", "true");
+    s.setAttribute("stroke-linecap", "round"); s.setAttribute("stroke-linejoin", "round");
+    paths.forEach(function (d) { var p = document.createElementNS("http://www.w3.org/2000/svg", "path"); p.setAttribute("d", d); s.appendChild(p); });
+    return s;
+  }
+  var ICON_WARN = ["M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z", "M12 9v4", "M12 17h.01"];
+  var ICON_TRASH = ["M3 6h18", "M8 6V4h8v2", "M19 6l-1 14H6L5 6", "M10 11v6", "M14 11v6"];
+
+  function tier(m) {
+    if (m >= 7) return { name: "SEVERE", color: "#ef4444", fill: "linear-gradient(#ef4444, #991b1b)" };
+    if (m >= 6) return { name: "MAJOR", color: "#f87171", fill: "linear-gradient(#f87171, #dc2626)" };
+    if (m >= 5) return { name: "STRONG", color: "#fb923c", fill: "linear-gradient(#fb923c, #ea580c)" };
+    if (m >= 4) return { name: "MODERATE", color: "#f5a50b", fill: "linear-gradient(#f5b50b, #b8860b)" };
+    return { name: "LIGHT", color: "#facc15", fill: "linear-gradient(#fde047, #ca8a04)" };
+  }
+  var QUIET = { name: "QUIET", color: "#6b7280", fill: "none" };
+
+  /* ----- earthquake data ----- */
+  async function loadFeed(days, force) {
+    var c = state.feeds[days];
+    if (c && !force && Date.now() - c.at < 300000) return c;
+    var ctl = new AbortController(), to = setTimeout(function () { ctl.abort(); }, 25000);
+    try {
+      var r = await fetch(FEEDS[days], { signal: ctl.signal });
+      if (!r.ok) throw new Error("USGS " + r.status);
+      var j = await r.json();
+      var rows = j.features.map(function (f) {
+        var p = f.properties || {}, g = (f.geometry && f.geometry.coordinates) || [];
+        var url = typeof p.url === "string" && p.url.indexOf("https://earthquake.usgs.gov/") === 0 ? p.url : null;
+        return { mag: p.mag, place: p.place || "Unknown location", n: norm(p.place || ""), time: p.time, lat: g[1], lon: g[0], url: url };
+      }).filter(function (x) { return x.mag != null && x.time != null; });
+      state.feeds[days] = { rows: rows, at: Date.now() };
+      state.loadError = false;
+      return state.feeds[days];
+    } finally { clearTimeout(to); }
+  }
+
+  /* ----- matching places to earthquakes ----- */
+  var ALIAS = {
+    usa: /\b(alaska|hawaii|california|nevada|oregon|washington|idaho|montana|wyoming|utah|arizona|new mexico|texas|oklahoma|kansas|missouri|tennessee|kentucky|arkansas|colorado|south carolina|north carolina|virginia|new york)\b|\b(ak|ca|hi|nv|or|wa|id|mt|wy|ut|az|nm|tx|ok|ks|mo|tn|ky|ar|co|sc|nc|va|ny)$/,
+    california: /\bcalifornia\b|\bca$/,
+    uk: /\b(england|scotland|wales|united kingdom|northern ireland)\b/,
+    uae: /\bunited arab emirates\b|\bemirates\b/,
+    turkey: /\b(turkey|turkiye)\b/
+  };
+  var COUNTRY_TERMS = { US: ["usa"], GB: ["uk"], AE: ["uae"], TR: ["turkey"], RU: ["russia", "kuril islands", "kamchatka", "sakhalin"] };
+  function termMatch(term, p) { return ALIAS[term] ? ALIAS[term].test(p) : new RegExp("\\b" + reEsc(term) + "\\b").test(p); }
+  function eventsFor(place, rows) {
+    return rows.filter(function (r) {
+      var textHit = place.terms && place.terms.some(function (t) { return termMatch(t, r.n); });
+      if (place.kind === "country" || place.kind === "text") return textHit;
+      var near = r.lat != null && km(place.lat, place.lon, r.lat, r.lon) <= place.radius;
+      return place.kind === "region" ? (near || textHit) : near;
+    });
+  }
+
+  /* ----- finding the place the user typed ----- */
+  var GAZ = {
+    "tokyo": [35.68, 139.69, "Tokyo, Japan"], "osaka": [34.69, 135.5, "Osaka, Japan"], "delhi": [28.61, 77.21, "Delhi, India"],
+    "mumbai": [19.08, 72.88, "Mumbai, India"], "chennai": [13.08, 80.27, "Chennai, India"], "kochi": [9.93, 76.27, "Kochi, India"],
+    "kolkata": [22.57, 88.36, "Kolkata, India"], "dubai": [25.2, 55.27, "Dubai, United Arab Emirates"], "istanbul": [41.01, 28.98, "Istanbul, Turkey"],
+    "tehran": [35.69, 51.39, "Tehran, Iran"], "kathmandu": [27.72, 85.32, "Kathmandu, Nepal"], "jakarta": [-6.21, 106.85, "Jakarta, Indonesia"],
+    "manila": [14.6, 120.98, "Manila, Philippines"], "taipei": [25.03, 121.57, "Taipei, Taiwan"], "santiago": [-33.45, -70.67, "Santiago, Chile"],
+    "lima": [-12.05, -77.04, "Lima, Peru"], "mexico city": [19.43, -99.13, "Mexico City, Mexico"], "los angeles": [34.05, -118.24, "Los Angeles, United States"],
+    "san francisco": [37.77, -122.42, "San Francisco, United States"], "seattle": [47.61, -122.33, "Seattle, United States"], "wellington": [-41.29, 174.78, "Wellington, New Zealand"]
+  };
+  async function geocode(q) {
+    var ctl = new AbortController(), to = setTimeout(function () { ctl.abort(); }, 7000);
+    try {
+      var r = await fetch(GEO + "?name=" + encodeURIComponent(q) + "&count=6&language=en&format=json", { signal: ctl.signal });
+      if (!r.ok) return null;
+      var j = await r.json();
+      return j.results || [];
+    } catch (e) { return null; } finally { clearTimeout(to); }
+  }
+  function pointKey(lat, lon) { return "p:" + Number(lat).toFixed(2) + "," + Number(lon).toFixed(2); }
+  async function resolve(q, rows) {
+    var nq = norm(q);
+    var res = await geocode(q);
+    if (res && res.length) {
+      var r = res.filter(function (x) { return /^PCL/.test(x.feature_code || "") && norm(x.name) === nq; })[0] || res[0];
+      var fc = r.feature_code || "";
+      if (/^PCL/.test(fc)) {
+        var terms = [norm(r.name)];
+        if (r.country && norm(r.country) !== norm(r.name)) terms.push(norm(r.country));
+        (COUNTRY_TERMS[r.country_code] || []).forEach(function (t) { if (terms.indexOf(t) < 0) terms.push(t); });
+        return { key: "c:" + (r.country_code || norm(r.name)), kind: "country", name: r.name, terms: terms };
+      }
+      var full = r.name + (r.admin1 && r.admin1 !== r.name ? ", " + r.admin1 : "") + (r.country ? ", " + r.country : "");
+      if (fc === "ADM1") return { key: pointKey(r.latitude, r.longitude), kind: "region", name: r.name, scope: r.country ? r.name + ", " + r.country : r.name, terms: [norm(r.name)], lat: r.latitude, lon: r.longitude, radius: RADIUS };
+      return { key: pointKey(r.latitude, r.longitude), kind: "city", name: r.name, scope: full, lat: r.latitude, lon: r.longitude, radius: RADIUS };
+    }
+    var g = GAZ[nq];
+    if (g) return { key: pointKey(g[0], g[1]), kind: "city", name: g[2].split(",")[0], scope: g[2], lat: g[0], lon: g[1], radius: RADIUS };
+    var guess = { key: "t:" + nq, kind: "text", name: q.trim().replace(/\b[a-z]/g, function (c) { return c.toUpperCase(); }), terms: [nq] };
+    return eventsFor(guess, rows).length ? guess : null;
+  }
+
+  /* ----- drawing ----- */
+  function msg(text, isErr) { var m = $("tpMsg"); m.textContent = text || ""; m.className = "tp-msg" + (isErr ? " err" : ""); }
+  function byTime(a, b) { return b.time - a.time; }
+  function byMag(a, b) { return b.mag - a.mag || b.time - a.time; }
+
+  function card(p, feed) {
+    var evs = eventsFor(p, feed.rows);
+    var strongest = evs.slice().sort(byMag)[0], latest = evs.slice().sort(byTime)[0];
+    var t = strongest ? tier(strongest.mag) : QUIET;
+    var a = el("article", "tp-card");
+
+    var gcol = el("div", "tp-gcol");
+    var gauge = el("div", "tp-gauge");
+    gauge.setAttribute("role", "img");
+    gauge.setAttribute("aria-label", strongest ? "Strongest magnitude " + strongest.mag.toFixed(1) + " on a scale of 10" : "No earthquakes recorded");
+    [25, 50, 75].forEach(function (top) { var tk = el("i", "tp-tick"); tk.style.top = top + "%"; gauge.appendChild(tk); });
+    var fill = el("div", "tp-fill");
+    fill.style.background = t.fill;
+    fill.style.height = "0%";
+    gauge.appendChild(fill);
+    gcol.appendChild(gauge);
+    var read = el("div", "tp-read");
+    var tn = el("div", "tp-tier", t.name); tn.style.color = t.color;
+    read.appendChild(tn);
+    read.appendChild(el("div", "tp-mag", strongest ? strongest.mag.toFixed(1) : "\u2013"));
+    read.appendChild(el("div", "tp-unit", "MAGNITUDE"));
+    gcol.appendChild(read);
+    a.appendChild(gcol);
+    var pct = strongest ? Math.min(100, strongest.mag * 10) : 0;
+    requestAnimationFrame(function () { requestAnimationFrame(function () { fill.style.height = pct + "%"; }); });
+
+    var body = el("div", "tp-body");
+    var head = el("div", "tp-head");
+    head.appendChild(el("h3", null, p.name));
+    var badge = el("span", "tp-badge" + (evs.length ? "" : " none"));
+    if (evs.length) badge.appendChild(icon(ICON_WARN));
+    badge.appendChild(document.createTextNode(evs.length ? evs.length + (evs.length === 1 ? " event" : " events") : "No events"));
+    head.appendChild(badge);
+    body.appendChild(head);
+
+    if (strongest) {
+      body.appendChild(el("p", "tp-line", "Strongest recent quake: M" + strongest.mag.toFixed(1)));
+      body.appendChild(el("p", "tp-line", "Latest: M" + latest.mag.toFixed(1) + ", " + latest.place + ", " + rel(latest.time)));
+    } else {
+      body.appendChild(el("p", "tp-line", "No earthquakes of M2.5 or higher in the last " + state.days + " days."));
+    }
+    if (p.scope) body.appendChild(el("p", "tp-line sub", "Showing earthquakes within " + p.radius + " km of " + p.scope + "."));
+    body.appendChild(el("p", "tp-line sub", "Checked " + new Date(feed.at).toLocaleString()));
+
+    if (evs.length) {
+      var open = !!state.expanded[p.key], limit = open ? 25 : 5;
+      var ul = el("ul", "tp-events");
+      evs.slice().sort(state.sort === "latest" ? byTime : byMag).slice(0, limit).forEach(function (r) {
+        var li = el("li", "tp-ev");
+        var m = el("b", null, "M" + r.mag.toFixed(1)); m.style.color = tier(r.mag).color;
+        li.appendChild(m);
+        if (r.url) { var l = el("a", null, r.place); l.href = r.url; l.target = "_blank"; l.rel = "noopener"; li.appendChild(l); }
+        else li.appendChild(el("span", null, r.place));
+        var tm = el("time", null, rel(r.time)); tm.title = new Date(r.time).toISOString().replace("T", " ").slice(0, 16) + " UTC";
+        li.appendChild(tm);
+        ul.appendChild(li);
+      });
+      body.appendChild(ul);
+      if (evs.length > 5) {
+        var more = el("button", "tp-more", open ? "Show fewer" : "Show " + Math.min(evs.length, 25) + (evs.length > 25 ? " of " + evs.length : " events"));
+        more.type = "button";
+        more.addEventListener("click", function () { state.expanded[p.key] = !open; render(); });
+        body.appendChild(more);
+      }
+    }
+    a.appendChild(body);
+
+    var del = el("button", "tp-del"); del.type = "button"; del.setAttribute("aria-label", "Remove " + p.name); del.title = "Remove";
+    del.appendChild(icon(ICON_TRASH));
+    del.addEventListener("click", function () {
+      state.places = state.places.filter(function (x) { return x.key !== p.key; });
+      save(); render();
+    });
+    a.appendChild(del);
+    return a;
+  }
+
+  function paintTools() {
+    Array.prototype.forEach.call(document.querySelectorAll("#tpTools [data-days]"), function (b) { b.setAttribute("aria-pressed", String(Number(b.dataset.days) === state.days)); });
+    Array.prototype.forEach.call(document.querySelectorAll("#tpTools [data-sort]"), function (b) { b.setAttribute("aria-pressed", String(b.dataset.sort === state.sort)); });
+  }
+
+  function render() {
+    var list = $("tpList");
+    list.textContent = "";
+    $("tpTools").hidden = !state.places.length;
+    paintTools();
+    if (!state.places.length) {
+      var empty = el("div", "tp-empty");
+      empty.appendChild(el("p", null, "Nothing here yet. Add a place above, or try one of these:"));
+      var chips = el("div", "tp-chips");
+      SUGGEST.forEach(function (s) {
+        var c = el("button", "tp-chip", s); c.type = "button";
+        c.addEventListener("click", function () { $("tpInput").value = s; $("tpForm").requestSubmit(); });
+        chips.appendChild(c);
+      });
+      empty.appendChild(chips);
+      list.appendChild(empty);
+      return;
+    }
+    var feed = state.feeds[state.days];
+    if (!feed) {
+      list.appendChild(el("p", "tp-status", state.loadError
+        ? "Could not load earthquake data. Check your internet connection, then press Refresh. If this page is open inside a preview that blocks outside connections, open it directly in Chrome, Edge or Safari."
+        : "Loading earthquake data..."));
+      return;
+    }
+    state.places.forEach(function (p) { list.appendChild(card(p, feed)); });
+  }
+
+  /* ----- actions ----- */
+  async function refresh(force) {
+    var btn = $("tpRefresh");
+    btn.disabled = true; btn.classList.add("spin");
+    try { await loadFeed(state.days, force); msg(""); }
+    catch (e) { state.loadError = !state.feeds[state.days]; msg("Could not reach the USGS earthquake feed. Try again in a moment.", true); }
+    finally { btn.disabled = false; btn.classList.remove("spin"); render(); }
+  }
+  $("tpRefresh").addEventListener("click", function () { refresh(true); });
+
+  $("tpForm").addEventListener("submit", async function (e) {
+    e.preventDefault();
+    var q = $("tpInput").value.trim();
+    if (q.length < 2) { msg("Enter at least 2 letters.", true); return; }
+    var add = $("tpAdd"); add.disabled = true; msg("Looking up " + q + "...");
+    try {
+      var feed = await loadFeed(state.days);
+      var place = await resolve(q, feed.rows);
+      if (!place) { msg("I could not find \"" + q + "\". Try a country or a larger city.", true); return; }
+      if (state.places.some(function (p) { return p.key === place.key; })) { msg(place.name + " is already on your list.", true); return; }
+      state.places.unshift(place);
+      save(); $("tpInput").value = ""; msg("");
+    } catch (err) {
+      state.loadError = !state.feeds[state.days];
+      msg("Could not reach the USGS earthquake feed. Check your connection and try again.", true);
+    } finally { add.disabled = false; render(); }
+  });
+
+  Array.prototype.forEach.call(document.querySelectorAll("#tpTools [data-days]"), function (b) {
+    b.addEventListener("click", async function () {
+      state.days = Number(b.dataset.days); save(); paintTools();
+      if (!state.feeds[state.days]) { render(); try { await loadFeed(state.days); } catch (e) { state.loadError = true; msg("Could not load that time window. Try again.", true); } }
+      render();
+    });
+  });
+  Array.prototype.forEach.call(document.querySelectorAll("#tpTools [data-sort]"), function (b) {
+    b.addEventListener("click", function () { state.sort = b.dataset.sort; save(); render(); });
+  });
+
+  render();
+  loadFeed(state.days).then(render, function () { state.loadError = true; render(); });
+  setInterval(function () {
+    if (state.places.length && !document.hidden) loadFeed(state.days, true).then(render, function () {});
+  }, 300000);
 })();
 </script>
 </body>
