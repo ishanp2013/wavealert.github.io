@@ -6,6 +6,7 @@
 <title>WaveAlert</title>
 <meta name="description" content="WaveAlert: live earthquake alerts, plain-language safety guidance and QuakeGuard, an assistant that answers earthquake questions.">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
 <style>
 :root {
   --paper:#e8eeef; --sheet:#f9fbfb; --ink:#12232e; --muted:#4b5f69; --line:#c2d0d4;
@@ -78,12 +79,11 @@ h2 { margin:0 0 10px; font-family:"Bricolage Grotesque", system-ui, sans-serif; 
 .bar strong { font-weight:600; }
 .bar a { font-weight:600; }
 iframe { display:block; width:100%; border:0; background:var(--sheet); }
-#guardFrame { height:clamp(560px, 82vh, 720px); border:1px solid var(--line); border-radius:12px; }
 .fine { margin:12px 2px 0; color:var(--muted); font-size:13.5px; }
 
 .guard { display:grid; grid-template-columns:minmax(0, 5fr) minmax(0, 7fr); gap:clamp(24px, 4vw, 48px); align-items:start; }
-.guard ul { margin:18px 0 0; padding:0; list-style:none; display:grid; gap:10px; }
-.guard li { padding:10px 14px; background:var(--sheet); border:1px solid var(--line); border-left:4px solid var(--accent); border-radius:3px 10px 10px 3px; font-size:15.5px; }
+.try-list { margin:18px 0 0; padding:0; list-style:none; display:grid; gap:10px; }
+.try-list li { padding:10px 14px; background:var(--sheet); border:1px solid var(--line); border-left:4px solid var(--accent); border-radius:3px 10px 10px 3px; font-size:15.5px; }
 
 /* safety steps */
 .steps { list-style:none; margin:26px 0 0; padding:0; display:grid; grid-template-columns:repeat(3, 1fr); gap:clamp(16px, 3vw, 36px); counter-reset:step; }
@@ -92,87 +92,6 @@ iframe { display:block; width:100%; border:0; background:var(--sheet); }
 .steps h3 { margin:0 0 6px; font-size:21px; letter-spacing:-.01em; }
 .steps p { margin:0; color:var(--muted); }
 .notice { margin-top:30px; padding:12px 16px; background:var(--note-bg); color:var(--note-ink); border-radius:10px; font-size:15px; }
-
-/* seismometer panel (always dark, like an instrument) */
-.tp { background:#050505; color:#f1f1f1; border:1px solid #232323; border-radius:16px; overflow:hidden; font-size:15px; }
-.tp :focus-visible { outline:2px solid #fca5a5; outline-offset:2px; }
-.tp-top { display:flex; justify-content:space-between; align-items:center; gap:12px; padding:14px 20px; border-bottom:1px solid #1f1f1f; }
-.tp-brand { display:flex; align-items:center; gap:12px; min-width:0; }
-.tp-logo { width:42px; height:42px; flex:none; border-radius:10px; background:#151515; display:grid; place-items:center; }
-.tp-logo svg { width:22px; height:22px; stroke:#f1f1f1; fill:none; stroke-width:2; }
-.tp-brand strong { display:block; font-size:17px; line-height:1.25; }
-.tp-brand small { color:#9a9a9a; font-size:13px; }
-.tp-refresh { display:inline-flex; align-items:center; gap:8px; min-height:40px; padding:8px 12px; border:0; border-radius:8px; background:none; color:#f1f1f1; font:inherit; font-weight:600; cursor:pointer; }
-.tp-refresh:hover { background:#151515; }
-.tp-refresh:disabled { opacity:.7; cursor:wait; }
-.tp-refresh svg { width:18px; height:18px; stroke:currentColor; fill:none; stroke-width:2; }
-.tp-refresh.spin svg { animation:tpspin .9s linear infinite; }
-@keyframes tpspin { to { transform:rotate(360deg); } }
-@media (prefers-reduced-motion: reduce) { .tp-refresh.spin svg { animation:none; } .tp-fill { transition:none !important; } }
-
-.tp-hero { padding:clamp(28px, 5vw, 48px) 20px 20px; text-align:center; }
-.tp-hero h3 { margin:0; font-family:"Bricolage Grotesque", system-ui, sans-serif; font-weight:800; font-size:clamp(28px, 5vw, 44px); line-height:1.1; letter-spacing:-.025em; }
-.tp-hero p { margin:12px auto 0; color:#a1a1a1; max-width:56ch; }
-.tp-form { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:24px; }
-.tp-input { display:flex; align-items:center; gap:10px; flex:1 1 280px; max-width:440px; min-height:46px; padding:0 14px; background:#0b0b0b; border:1px solid #2b2b2b; border-radius:10px; }
-.tp-input:focus-within { border-color:#ef4444; }
-.tp-input svg { width:18px; height:18px; flex:none; stroke:#8a8a8a; fill:none; stroke-width:2; }
-.tp-input input { flex:1; min-width:0; background:none; border:0; outline:0; color:#f1f1f1; font:inherit; font-size:16px; }
-.tp-input input::placeholder { color:#6f6f6f; }
-.tp-add { display:inline-flex; align-items:center; gap:8px; min-height:46px; padding:0 20px; border:1px solid #2b2b2b; border-radius:10px; background:#161616; color:#f1f1f1; font:inherit; font-weight:600; cursor:pointer; }
-.tp-add:hover { background:#1d1d1d; }
-.tp-add:disabled { opacity:.6; cursor:wait; }
-.tp-add svg { width:18px; height:18px; stroke:currentColor; fill:none; stroke-width:2; }
-.tp .tp-msg { min-height:22px; margin:12px auto 0; font-size:14px; color:#a1a1a1; }
-.tp .tp-msg.err { color:#fca5a5; }
-
-.tp-tools { display:flex; gap:12px 28px; flex-wrap:wrap; justify-content:space-between; align-items:center; padding:4px 20px 14px; }
-.tp-tools[hidden] { display:none; }
-.tp-seg { display:inline-flex; align-items:center; gap:6px; flex-wrap:wrap; color:#9a9a9a; font-size:13.5px; }
-.tp-seg span { margin-right:4px; }
-.tp-seg button { min-height:34px; padding:4px 12px; border:1px solid #2b2b2b; border-radius:999px; background:#0e0e0e; color:#cfcfcf; font:inherit; font-size:13.5px; cursor:pointer; }
-.tp-seg button[aria-pressed="true"] { background:#2a1010; border-color:#7f1d1d; color:#fca5a5; }
-
-.tp-list { display:grid; gap:16px; padding:0 20px 24px; }
-.tp-card { position:relative; display:grid; grid-template-columns:auto minmax(0, 1fr); gap:22px; padding:20px; background:#0a0a0a; border:1px solid #262626; border-radius:16px; }
-.tp-gcol { display:flex; align-items:flex-end; align-self:start; gap:16px; }
-.tp-gauge { position:relative; width:50px; height:200px; flex:none; overflow:hidden; border-radius:12px; background:#141414; border:1px solid #2a2a2a; }
-.tp-tick { position:absolute; left:0; right:0; border-top:1px dashed #333; }
-.tp-fill { position:absolute; left:0; right:0; bottom:0; border-radius:0 0 10px 10px; transition:height .6s ease; }
-.tp-read { min-width:112px; padding-bottom:2px; }
-.tp-tier { font-weight:800; letter-spacing:.06em; font-size:15px; }
-.tp-mag { font-size:34px; font-weight:800; line-height:1.1; }
-.tp-unit { color:#8a8a8a; font-size:12px; letter-spacing:.05em; }
-.tp-body { min-width:0; padding-right:36px; }
-.tp-head { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
-.tp-head h3 { margin:0; font-size:22px; letter-spacing:-.01em; }
-.tp-badge { display:inline-flex; align-items:center; gap:6px; padding:2px 10px; border:1px solid #7f1d1d; border-radius:999px; background:#2a0f0f; color:#fca5a5; font-size:13px; }
-.tp-badge.none { border-color:#2b2b2b; background:#121212; color:#a1a1a1; }
-.tp-badge svg { width:13px; height:13px; stroke:currentColor; fill:none; stroke-width:2; }
-.tp .tp-line { margin:10px 0 0; color:#d4d4d4; }
-.tp .tp-line.sub { margin-top:4px; color:#7d7d7d; font-size:13.5px; }
-.tp-events { list-style:none; margin:14px 0 0; padding:0; display:grid; gap:6px; }
-.tp-ev { display:grid; grid-template-columns:auto minmax(0, 1fr) auto; gap:12px; align-items:baseline; padding:7px 12px; background:#101010; border-radius:6px; font-size:14.5px; }
-.tp-ev b { font-weight:800; }
-.tp-ev a { color:#e5e5e5; text-decoration:none; overflow-wrap:anywhere; }
-.tp-ev a:hover { text-decoration:underline; }
-.tp-ev time { color:#7d7d7d; font-size:13.5px; white-space:nowrap; }
-.tp-more { margin-top:10px; padding:6px 0; border:0; background:none; color:#fca5a5; font:inherit; font-size:14px; cursor:pointer; }
-.tp-del { position:absolute; top:16px; right:16px; min-width:40px; min-height:40px; padding:8px; border:0; border-radius:8px; background:none; color:#8a8a8a; cursor:pointer; }
-.tp-del:hover { background:#171717; color:#f87171; }
-.tp-del svg { width:18px; height:18px; stroke:currentColor; fill:none; stroke-width:2; }
-.tp-empty, .tp-status { padding:24px 8px 12px; text-align:center; color:#9a9a9a; }
-.tp-chips { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin-top:14px; }
-.tp-chip { min-height:38px; padding:6px 14px; border:1px solid #2b2b2b; border-radius:999px; background:#0e0e0e; color:#e5e5e5; font:inherit; font-size:14px; cursor:pointer; }
-.tp-chip:hover { border-color:#7f1d1d; }
-@media (max-width: 700px) {
-  .tp-card { grid-template-columns:1fr; gap:16px; }
-  .tp-gauge { height:150px; }
-  .tp-body { padding-right:0; }
-  .tp-del { top:12px; right:12px; }
-  .tp-ev { grid-template-columns:auto minmax(0, 1fr); }
-  .tp-ev time { grid-column:2; }
-}
 
 /* footer */
 .foot { border-top:1px solid var(--line); padding-block:30px 44px; color:var(--muted); font-size:14px; }
@@ -192,9 +111,172 @@ iframe { display:block; width:100%; border:0; background:var(--sheet); }
   .stat { border-right:0; border-bottom:1px solid var(--line); }
   .stat:last-child { border-bottom:0; }
 }
+
+.try-list li { padding:0; }
+.try-list li button { display:block; width:100%; padding:10px 14px; border:0; background:none; color:inherit; font:inherit; font-size:15.5px; text-align:left; cursor:pointer; }
+.try-list li button:hover { background:var(--paper); }
+
+/* Live seismometer: black panel with gauge cards */
+.tpx { background:#000; color:#fafafa; font-family:"Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; font-size:16px; line-height:1.5; min-height:100%; }
+.tpx *, .tpx *::before, .tpx *::after { box-sizing:border-box; }
+.tpx h2, .tpx h3, .tpx p { margin:0; }
+.tpx button, .tpx input { font-family:inherit; }
+.tpx :focus-visible { outline:2px solid #fca5a5; outline-offset:2px; }
+.tpx-wrap { max-width:1280px; margin:0 auto; padding:0 20px; }
+.tpx-top { border-bottom:1px solid #1c1c1c; }
+.tpx-toprow { display:flex; align-items:center; justify-content:space-between; gap:12px; min-height:88px; }
+.tpx-brand { display:flex; align-items:center; gap:12px; min-width:0; }
+.tpx-logo { width:46px; height:46px; flex:none; display:grid; place-items:center; border-radius:12px; background:#141414; }
+.tpx-logo svg { width:24px; height:24px; stroke:#fafafa; fill:none; stroke-width:2; }
+.tpx-names strong { display:block; font-size:20px; font-weight:700; letter-spacing:-.01em; line-height:1.25; }
+.tpx-names small { display:block; color:#8d8d8d; font-size:15px; line-height:1.3; }
+.tpx-refresh { display:inline-flex; align-items:center; gap:10px; min-height:44px; padding:8px 12px; border:0; border-radius:8px; background:none; color:#fafafa; font-size:15px; font-weight:600; cursor:pointer; }
+.tpx-refresh:hover { background:#141414; }
+.tpx-refresh:disabled { opacity:.7; cursor:wait; }
+.tpx-refresh svg { width:20px; height:20px; stroke:currentColor; fill:none; stroke-width:2; }
+.tpx-refresh.spin svg { animation:tpspin .9s linear infinite; }
+@keyframes tpspin { to { transform:rotate(360deg); } }
+
+.tpx-main { padding-top:clamp(36px, 6vw, 48px); padding-bottom:64px; }
+.tpx-hero { text-align:center; }
+.tpx-title { font-size:clamp(32px, 5.2vw, 46px); font-weight:700; letter-spacing:-.025em; line-height:1.15; }
+.tpx .tpx-sub { margin:14px auto 0; max-width:640px; color:#a3a3a3; font-size:clamp(16px, 2vw, 19px); line-height:1.6; }
+.tpx-form { display:flex; justify-content:center; flex-wrap:wrap; gap:10px; margin-top:38px; }
+.tpx-input { display:flex; align-items:center; gap:12px; flex:1 1 300px; max-width:442px; min-height:46px; padding:0 14px; background:#0a0a0a; border:1px solid #2a2a2a; border-radius:8px; cursor:text; }
+.tpx-input:focus-within { border-color:#ef4444; }
+.tpx-input svg { width:18px; height:18px; flex:none; stroke:#8a8a8a; fill:none; stroke-width:2; }
+.tpx-input input { flex:1; min-width:0; background:none; border:0; outline:0; color:#fafafa; font-size:16px; }
+.tpx-input input::placeholder { color:#737373; }
+.tpx-add { display:inline-flex; align-items:center; gap:10px; min-height:46px; padding:0 22px; background:#141414; border:1px solid #2a2a2a; border-radius:8px; color:#fafafa; font-size:16px; font-weight:600; cursor:pointer; }
+.tpx-add:hover { background:#1b1b1b; }
+.tpx-add:disabled { opacity:.6; cursor:wait; }
+.tpx-add svg { width:18px; height:18px; stroke:currentColor; fill:none; stroke-width:2; }
+.tpx .tp-msg { min-height:22px; margin:12px auto 0; font-size:14px; color:#a3a3a3; }
+.tpx .tp-msg.err { color:#fca5a5; }
+
+.tpx .tp-list { display:grid; gap:16px; margin-top:28px; }
+.tpx .tp-card { position:relative; display:grid; grid-template-columns:auto minmax(0, 1fr); gap:20px; padding:20px; background:#0a0a0a; border:1px solid #262626; border-radius:18px; }
+.tpx .tp-gcol { display:flex; align-items:flex-end; align-self:start; gap:16px; }
+.tpx .tp-gauge { position:relative; width:50px; height:200px; flex:none; overflow:hidden; border-radius:12px; background:#151515; border:1px solid #2a2a2a; }
+.tpx .tp-tick { position:absolute; left:0; right:0; border-top:1px dashed #333; }
+.tpx .tp-fill { position:absolute; left:0; right:0; bottom:0; border-radius:0 0 10px 10px; transition:height .6s ease; }
+.tpx .tp-read { padding-bottom:2px; }
+.tpx .tp-tier { font-size:17px; font-weight:800; letter-spacing:.07em; line-height:1.2; }
+.tpx .tp-mag { font-size:30px; font-weight:800; line-height:1.15; }
+.tpx .tp-unit { color:#8a8a8a; font-size:12px; letter-spacing:.04em; }
+.tpx .tp-body { min-width:0; padding-right:40px; }
+.tpx .tp-head { display:flex; align-items:center; flex-wrap:wrap; gap:10px; }
+.tpx .tp-head h3 { font-size:22px; font-weight:600; letter-spacing:-.01em; line-height:1.3; }
+.tpx .tp-badge { display:inline-flex; align-items:center; gap:6px; padding:2px 10px; border:1px solid #7f1d1d; border-radius:999px; background:#2a0f0f; color:#f87171; font-size:13.5px; }
+.tpx .tp-badge.none { border-color:#2a2a2a; background:#121212; color:#a3a3a3; }
+.tpx .tp-badge svg { width:13px; height:13px; stroke:currentColor; fill:none; stroke-width:2; }
+.tpx .tp-line { margin-top:10px; color:#a3a3a3; font-size:17px; }
+.tpx .tp-line.sub { margin-top:4px; color:#737373; font-size:14px; }
+.tpx .tp-events { list-style:none; margin:12px 0 0; padding:0; display:grid; grid-template-columns:auto auto auto; width:fit-content; max-width:100%; gap:6px 0; }
+.tpx .tp-ev { grid-column:1 / -1; display:grid; grid-template-columns:auto 1fr auto; grid-template-columns:subgrid; column-gap:14px; align-items:baseline; padding:5px 10px; background:#0f0f0f; border-radius:6px; font-size:15px; }
+.tpx .tp-ev b { font-weight:800; }
+.tpx .tp-ev a, .tpx .tp-ev span { color:#f5f5f5; text-decoration:none; overflow-wrap:anywhere; }
+.tpx .tp-ev a:hover { text-decoration:underline; }
+.tpx .tp-ev time { color:#737373; font-size:14px; white-space:nowrap; }
+.tpx .tp-del { position:absolute; top:16px; right:16px; min-width:40px; min-height:40px; padding:8px; border:0; border-radius:8px; background:none; color:#8a8a8a; cursor:pointer; }
+.tpx .tp-del:hover { background:#171717; color:#f87171; }
+.tpx .tp-del svg { width:18px; height:18px; stroke:currentColor; fill:none; stroke-width:2; }
+.tpx .tp-empty, .tpx .tp-status { padding:28px 8px; text-align:center; color:#8a8a8a; }
+@media (prefers-reduced-motion: reduce) { .tpx-refresh.spin svg { animation:none; } .tpx .tp-fill { transition:none; } }
+@media (max-width: 720px) {
+  .tpx .tp-card { grid-template-columns:1fr; gap:16px; }
+  .tpx .tp-gauge { height:150px; }
+  .tpx .tp-body { padding-right:0; }
+  .tpx .tp-del { top:12px; right:12px; }
+  .tpx .tp-events { grid-template-columns:1fr; width:100%; }
+  .tpx .tp-ev { grid-template-columns:auto minmax(0, 1fr); }
+  .tpx .tp-ev time { grid-column:2; }
+}
+
+/* QuakeGuard chat panel */
+.qg { display:flex; flex-direction:column; height:clamp(580px, 84vh, 740px); background:var(--sheet); border:1px solid var(--line); border-radius:12px; overflow:hidden; }
+.qg button, .qg input, .qg textarea { font-family:inherit; }
+.qg-top { display:flex; align-items:baseline; flex-wrap:wrap; gap:4px 12px; padding:14px 18px 10px; border-bottom:1px solid var(--line); }
+.qg-top strong { font-family:"Bricolage Grotesque", system-ui, sans-serif; font-weight:800; font-size:23px; letter-spacing:-.02em; }
+.qg-top span { color:var(--muted); font-size:13.5px; }
+.qg-top .qg-mode { margin-left:auto; padding:2px 10px; border:1px solid var(--line); border-radius:999px; font-size:12.5px; }
+.qg-top .qg-mode.on { border-color:var(--accent); color:var(--accent); font-weight:600; }
+.qg-controls { display:flex; flex-wrap:wrap; gap:8px; padding:10px 18px; }
+.qg-pill { display:inline-flex; align-items:center; gap:7px; min-height:36px; padding:6px 13px; border:1px solid var(--line); border-radius:999px; background:var(--paper); color:var(--ink); font-size:13.5px; cursor:pointer; }
+.qg-pill svg { width:16px; height:16px; flex:none; }
+.qg-pill[aria-pressed="true"] { background:var(--accent); color:var(--on-accent); border-color:var(--accent); }
+.qg-pill[hidden] { display:none; }
+.qg-messages { flex:1; min-height:0; overflow-y:auto; padding:16px 18px; display:flex; flex-direction:column; gap:14px; border-top:1px solid var(--line);
+  background-color:var(--paper); background-image:linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px); background-size:24px 24px; }
+.qg-msg { max-width:min(88%, 62ch); overflow-wrap:anywhere; }
+.qg-msg.user { align-self:flex-end; background:var(--ink); color:var(--paper); padding:9px 14px; border-radius:14px 14px 3px 14px; }
+.qg-msg.bot { align-self:flex-start; background:var(--sheet); padding:10px 14px; border:1px solid var(--line); border-left:4px solid var(--accent); border-radius:3px 14px 14px 3px; }
+.qg-msg.bot.err { border-left-color:var(--trace); }
+.qg-msg p { margin:0 0 8px; } .qg-msg p:last-child { margin-bottom:0; }
+.qg-msg ul, .qg-msg ol { margin:0 0 8px; padding-left:22px; } .qg-msg li { margin:2px 0; }
+.qg-meta { margin-top:6px; font-size:12px; color:var(--muted); }
+.qg-listen { display:inline-flex; align-items:center; gap:6px; margin-top:8px; padding:4px 0; border:0; background:none; color:var(--accent); font-size:13px; cursor:pointer; }
+.qg-listen svg { width:15px; height:15px; }
+.qg-dots { display:inline-flex; align-items:center; gap:4px; color:var(--muted); }
+.qg-dots i { width:6px; height:6px; border-radius:50%; background:currentColor; animation:qgblink 1.1s infinite ease-in-out; }
+.qg-dots i:nth-child(2) { animation-delay:.18s; } .qg-dots i:nth-child(3) { animation-delay:.36s; }
+@keyframes qgblink { 0%, 80%, 100% { opacity:.25; } 40% { opacity:1; } }
+.qg-chips { display:flex; flex-wrap:wrap; gap:8px; }
+.qg-chip { padding:8px 12px; border:1px solid var(--line); border-radius:10px; background:var(--sheet); color:var(--ink); font-size:14px; text-align:left; cursor:pointer; }
+.qg-chip:hover { border-color:var(--accent); }
+.qg-key { border-top:1px solid var(--line); padding:8px 18px; font-size:13.5px; }
+.qg-key[hidden] { display:none; }
+.qg-key summary { cursor:pointer; color:var(--muted); }
+.qg-key p { margin:8px 0 0; color:var(--muted); max-width:62ch; }
+.qg-keyrow { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+.qg-keyrow input { flex:1 1 220px; min-width:0; min-height:40px; padding:6px 12px; border:1px solid var(--line); border-radius:8px; background:var(--paper); color:var(--ink); font-size:15px; }
+.qg-btn { min-height:40px; padding:6px 16px; border:1px solid var(--line); border-radius:8px; background:var(--accent); color:var(--on-accent); font-weight:600; font-size:14px; cursor:pointer; }
+.qg-btn#qgKeyClear { background:var(--paper); color:var(--ink); }
+.qg-btn[hidden] { display:none; }
+.qg .qg-keystate { font-size:12.5px; }
+.qg-status { min-height:20px; padding:6px 20px 0; font-size:13px; color:var(--muted); }
+.qg-status.warn { color:var(--note-ink); }
+.qg-composer { display:flex; align-items:flex-end; gap:8px; padding:6px 18px 14px; }
+.qg-composer textarea { flex:1; min-height:44px; max-height:140px; resize:none; padding:10px 16px; border:1px solid var(--line); border-radius:22px; background:var(--paper); color:var(--ink); font-size:16px; line-height:1.4; }
+.qg-icon { display:grid; place-items:center; width:44px; height:44px; flex:none; border:1px solid var(--line); border-radius:50%; background:var(--paper); color:var(--ink); cursor:pointer; }
+.qg-icon svg { width:20px; height:20px; }
+.qg-icon.primary { background:var(--accent); border-color:var(--accent); color:var(--on-accent); }
+.qg-icon.rec { background:var(--trace); border-color:var(--trace); color:#fff; animation:qgpulse 1.3s infinite; }
+.qg-icon:disabled { opacity:.5; cursor:not-allowed; }
+@keyframes qgpulse { 0% { box-shadow:0 0 0 0 color-mix(in srgb, var(--trace) 55%, transparent); } 100% { box-shadow:0 0 0 12px transparent; } }
+.qg :focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+@media (prefers-reduced-motion: reduce) { .qg-icon.rec, .qg-dots i { animation:none; } }
 </style>
 </head>
 <body>
+<!-- =====================================================================
+     WAVEALERT SETTINGS  -  edit the three values below, then save the file
+     =====================================================================
+     apiKey    Paste your Anthropic API key between the quotes to switch on AI
+               answers in QuakeGuard for everyone who opens this page.
+               WARNING: anything written in this file can be read by anyone who
+               opens the page (View Source). Only use a key here on a private
+               copy or a local test, and set a spend limit on the key in the
+               Anthropic console. Safer options: leave it empty and paste the key
+               into "AI settings" inside the QuakeGuard panel (stored only in
+               that browser), or use proxyUrl below.
+     model     The Claude model QuakeGuard uses.
+     proxyUrl  Optional. The address of your own server that forwards requests to
+               https://api.anthropic.com/v1/messages and adds the key there. The
+               page sends the normal request body (model, max_tokens, system,
+               messages) and expects Anthropic's normal JSON reply. When this is
+               set, the key is never put in the page and apiKey is ignored.
+     Leave apiKey and proxyUrl empty and QuakeGuard still works, using its
+     built-in answers and live USGS data.
+     ===================================================================== -->
+<script>
+window.WAVEALERT_CONFIG = {
+  apiKey: "",
+  model: "claude-sonnet-5-5",
+  proxyUrl: ""
+};
+</script>
+
 <a class="skip" href="#alerts">Skip to live alerts</a>
 
 <header class="head">
@@ -234,55 +316,41 @@ iframe { display:block; width:100%; border:0; background:var(--sheet); }
     </div>
   </section>
 
-  <section class="section wrap" id="alerts">
-    <h2>Live alerts</h2>
-    <p class="intro">Search any city or country and see its latest earthquake status, straight from the USGS.</p>
-
-    <div class="tp" id="tp">
-      <div class="tp-top">
-        <div class="tp-brand">
-          <span class="tp-logo"><svg viewBox="0 0 24 24" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4l3-8 5 16 3-8h5"/></svg></span>
-          <span><strong>WaveAlert Seismometer</strong><small>Live earthquake monitor</small></span>
-        </div>
-        <button class="tp-refresh" id="tpRefresh" type="button">
-          <svg viewBox="0 0 24 24" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 0-15.5-6.2L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 15.5 6.2L21 16"/><path d="M21 21v-5h-5"/></svg>
-          <span>Refresh</span>
-        </button>
+  <section id="alerts" aria-label="Live seismometer">
+<div class="tpx" id="tpx">
+  <header class="tpx-top">
+    <div class="tpx-wrap tpx-toprow">
+      <div class="tpx-brand">
+        <span class="tpx-logo"><svg viewBox="0 0 24 24" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4l3-8 5 16 3-8h5"/></svg></span>
+        <span class="tpx-names"><strong>Live Seismometer</strong><small>Earthquakes from the USGS</small></span>
       </div>
-
-      <div class="tp-hero">
-        <h3>Monitor the ground beneath you</h3>
-        <p>Add a city or country to watch its seismic activity. Saved places stay here as live records, and the bar rises when an earthquake is detected.</p>
-        <form class="tp-form" id="tpForm" autocomplete="off">
-          <label class="tp-input">
-            <svg viewBox="0 0 24 24" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            <input id="tpInput" type="text" placeholder="Enter a city or country (e.g. Japan)" aria-label="City or country" maxlength="60" enterkeyhint="search">
-          </label>
-          <button class="tp-add" id="tpAdd" type="submit">
-            <svg viewBox="0 0 24 24" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-            <span>Add</span>
-          </button>
-        </form>
-        <p class="tp-msg" id="tpMsg" role="status"></p>
-      </div>
-
-      <div class="tp-tools" id="tpTools" hidden>
-        <div class="tp-seg" role="group" aria-label="Time window">
-          <span>Show</span>
-          <button type="button" data-days="7" aria-pressed="false">7 days</button>
-          <button type="button" data-days="30" aria-pressed="true">30 days</button>
-        </div>
-        <div class="tp-seg" role="group" aria-label="Sort events">
-          <span>Sort events</span>
-          <button type="button" data-sort="latest" aria-pressed="true">Latest</button>
-          <button type="button" data-sort="strongest" aria-pressed="false">Strongest</button>
-        </div>
-      </div>
-
-      <div class="tp-list" id="tpList"></div>
+      <button class="tpx-refresh" id="tpRefresh" type="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 0-15.5-6.2L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 15.5 6.2L21 16"/><path d="M21 21v-5h-5"/></svg>
+        <span>Refresh</span>
+      </button>
     </div>
+  </header>
 
-    <p class="fine">Earthquakes of M2.5 or higher from the USGS. City lookup uses the free Open-Meteo geocoding service, and cities show earthquakes within 300 km. Countries match the place names the USGS reports, so a few offshore events near a coast may be listed under a sea or ridge name instead. You can also <a href="https://mindful-quake-alert-live.base44.app" target="_blank" rel="noopener">open the original alert app in its own tab</a>.</p>
+  <div class="tpx-wrap tpx-main">
+    <section class="tpx-hero">
+      <h2 class="tpx-title">Monitor the ground beneath you</h2>
+      <p class="tpx-sub">Add a city or country to watch its seismic activity. Saved locations stay here as live records &mdash; the bar rises when an earthquake is detected.</p>
+      <form class="tpx-form" id="tpForm" autocomplete="off">
+        <label class="tpx-input">
+          <svg viewBox="0 0 24 24" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <input id="tpInput" type="text" placeholder="Enter a city or country (e.g. Japan)" aria-label="City or country" maxlength="60" enterkeyhint="search">
+        </label>
+        <button class="tpx-add" id="tpAdd" type="submit">
+          <svg viewBox="0 0 24 24" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+          <span>Add</span>
+        </button>
+      </form>
+      <p class="tp-msg" id="tpMsg" role="status"></p>
+    </section>
+
+    <div class="tp-list" id="tpList"></div>
+  </div>
+</div>
   </section>
 
   <section class="section wrap" id="quakeguard">
@@ -291,773 +359,62 @@ iframe { display:block; width:100%; border:0; background:var(--sheet); }
         <h2>Ask QuakeGuard</h2>
         <p class="intro">QuakeGuard answers earthquake questions using live data from the USGS, and explains what to do and why. Type a question, or tap the microphone to speak it. Turn on &ldquo;Speak answers&rdquo; to hear the reply.</p>
         <p class="fine" style="margin-top:18px">Try asking:</p>
-        <ul style="margin-top:8px">
-          <li>What is the strongest earthquake in the last 24 hours?</li>
-          <li>Any earthquakes near Tokyo today?</li>
-          <li>What should I do during an earthquake?</li>
-          <li>What is the difference between magnitude and intensity?</li>
+        <ul class="try-list" style="margin-top:8px">
+          <li><button type="button" data-ask="What is the strongest earthquake in the last 24 hours?">What is the strongest earthquake in the last 24 hours?</button></li>
+          <li><button type="button" data-ask="Any earthquakes in Japan today?">Any earthquakes in Japan today?</button></li>
+          <li><button type="button" data-ask="What should I do during an earthquake?">What should I do during an earthquake?</button></li>
+          <li><button type="button" data-ask="What is the difference between magnitude and intensity?">What is the difference between magnitude and intensity?</button></li>
         </ul>
-        <p class="fine">QuakeGuard cannot predict earthquakes. Its safety and science answers are built in, and live figures come from the USGS and can be delayed or revised.</p>
+        <p class="fine">QuakeGuard cannot predict earthquakes. Live figures come from the USGS and can be delayed or revised.</p>
       </div>
-      <iframe id="guardFrame" title="QuakeGuard earthquake assistant" allow="microphone; geolocation" srcdoc="&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;en&quot;&gt;
-&lt;head&gt;
-&lt;meta charset=&quot;utf-8&quot;&gt;
-&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, viewport-fit=cover&quot;&gt;
-&lt;title&gt;QuakeGuard&lt;/title&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&amp;display=swap&quot;&gt;
-&lt;style&gt;
-:root {
-  --paper:#e8eeef; --sheet:#f9fbfb; --ink:#12232e; --muted:#4b5f69; --line:#c2d0d4;
-  --grid:rgba(18,35,46,.07); --accent:#0a6c8f; --on-accent:#ffffff; --trace:#d1342f;
-  --user:#12232e; --on-user:#f2f7f8; --note-bg:#fdeceb; --note-ink:#7a1d19;
-  color-scheme: light;
-  box-sizing: border-box;
-  padding-top: env(safe-area-inset-top, 0px);
-  padding-bottom: env(safe-area-inset-bottom, 0px);
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme=&quot;light&quot;]) {
-    --paper:#0c1820; --sheet:#13232d; --ink:#e4eef1; --muted:#9bb0b9; --line:#27404d;
-    --grid:rgba(228,238,241,.06); --accent:#4cc3e8; --on-accent:#06222c; --trace:#ff6b5e;
-    --user:#e4eef1; --on-user:#0c1820; --note-bg:#2b1816; --note-ink:#ffc9c4;
-    color-scheme: dark;
-  }
-}
-:root[data-theme=&quot;dark&quot;] {
-  --paper:#0c1820; --sheet:#13232d; --ink:#e4eef1; --muted:#9bb0b9; --line:#27404d;
-  --grid:rgba(228,238,241,.06); --accent:#4cc3e8; --on-accent:#06222c; --trace:#ff6b5e;
-  --user:#e4eef1; --on-user:#0c1820; --note-bg:#2b1816; --note-ink:#ffc9c4;
-  color-scheme: dark;
-}
-html { height:100%; scroll-padding-top: env(safe-area-inset-top, 0px); }
-*, *::before, *::after { box-sizing: border-box; }
-body {
-  margin:0; height:100%; background:var(--paper); color:var(--ink);
-  font-family: system-ui, -apple-system, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif;
-  font-size:15px; line-height:1.55;
-}
-.app { height:100%; max-width:820px; margin:0 auto; display:flex; flex-direction:column; background:var(--paper); border-inline:1px solid var(--line); }
+      <div class="qg" id="qg">
+        <div class="qg-top">
+          <strong>QuakeGuard</strong>
+          <span>Ask anything about earthquakes.</span>
+          <span class="qg-mode" id="qgMode">Built-in answers</span>
+        </div>
 
-/* header with live seismograph trace */
-.top { padding:14px 18px 0; display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; }
-.brand { font-family:&quot;Bricolage Grotesque&quot;, system-ui, sans-serif; font-weight:800; font-size:26px; letter-spacing:-.02em; margin:0; line-height:1; }
-.tag { color:var(--muted); font-size:13.5px; margin:0; }
-.trace-wrap { margin:8px 0 0; border-block:1px solid var(--line); background:var(--sheet); height:56px; position:relative; }
-#trace { width:100%; height:100%; display:block; }
+        <div class="qg-controls">
+          <button class="qg-pill" id="qgSpeak" aria-pressed="false" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>
+            <span>Speak answers</span>
+          </button>
+          <button class="qg-pill" id="qgAuto" aria-pressed="true" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7z"/></svg>
+            <span>Send after dictating</span>
+          </button>
+          <button class="qg-pill" id="qgStop" type="button" hidden>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>
+            <span>Stop voice</span>
+          </button>
+        </div>
 
-.note { margin:10px 18px 0; padding:8px 12px; background:var(--note-bg); color:var(--note-ink); border-radius:8px; font-size:13.5px; line-height:1.45; }
+        <div class="qg-messages" id="qgMessages" aria-live="polite"></div>
 
-.live { margin:10px 18px 0; border:1px solid var(--line); background:var(--sheet); border-radius:8px; padding:8px 12px; font-size:13.5px; line-height:1.45; }
-.live summary { cursor:pointer; font-weight:600; }
-.live ul { margin:8px 0 6px; padding-left:20px; } .live li { margin:2px 0; }
-.live .src { margin:6px 0 0; color:var(--muted); font-size:12.5px; }
-.messages .note, .messages .live { margin:0; }
-.messages &gt; * { flex:none; }
-.controls { display:flex; gap:8px; flex-wrap:wrap; padding:10px 18px 8px; }
-.pill {
-  display:inline-flex; align-items:center; gap:7px; min-height:36px; padding:6px 13px;
-  border:1px solid var(--line); border-radius:999px; background:var(--sheet); color:var(--ink);
-  font:inherit; font-size:13.5px; cursor:pointer;
-}
-.pill svg { width:16px; height:16px; flex:none; }
-.pill[aria-pressed=&quot;true&quot;] { background:var(--accent); color:var(--on-accent); border-color:var(--accent); }
-.pill[hidden] { display:none; }
-.pill:focus-visible, .icon-btn:focus-visible, .chip:focus-visible, .listen:focus-visible, textarea:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+        <details class="qg-key" id="qgKeyBox">
+          <summary>AI settings</summary>
+          <form id="qgKeyForm" autocomplete="off">
+            <p>QuakeGuard uses its built-in guide until an API key is added. Paste an Anthropic API key to switch on AI answers. The key stays in this browser, on this device only.</p>
+            <div class="qg-keyrow">
+              <input id="qgKeyInput" type="password" placeholder="sk-ant-..." aria-label="Anthropic API key" autocomplete="off" spellcheck="false">
+              <button type="submit" class="qg-btn">Save key</button>
+              <button type="button" class="qg-btn" id="qgKeyClear" hidden>Remove key</button>
+            </div>
+            <p class="qg-keystate" id="qgKeyState"></p>
+          </form>
+        </details>
 
-/* conversation on graph paper */
-.messages {
-  flex:1; overflow-y:auto; padding:16px 18px; display:flex; flex-direction:column; gap:14px;
-  background-image:linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-  background-size:24px 24px; border-top:1px solid var(--line);
-}
-.msg { max-width:min(88%, 62ch); word-wrap:break-word; overflow-wrap:anywhere; }
-.msg.user { align-self:flex-end; background:var(--user); color:var(--on-user); padding:9px 14px; border-radius:14px 14px 3px 14px; }
-.msg.bot { align-self:flex-start; background:var(--sheet); padding:10px 14px 10px 14px; border:1px solid var(--line); border-left:4px solid var(--accent); border-radius:3px 14px 14px 3px; }
-.msg.bot.err { border-left-color:var(--trace); }
-.msg p { margin:0 0 8px; } .msg p:last-child { margin-bottom:0; }
-.msg ul, .msg ol { margin:0 0 8px; padding-left:22px; } .msg li { margin:2px 0; }
-.listen { margin-top:8px; display:inline-flex; align-items:center; gap:6px; background:none; border:0; padding:4px 0; color:var(--accent); font:inherit; font-size:13px; cursor:pointer; }
-.listen svg { width:15px; height:15px; }
-.msg .meta { margin-top:6px; font-size:12px; color:var(--muted); }
-.dots { display:inline-flex; gap:4px; align-items:center; color:var(--muted); }
-.dots i { width:6px; height:6px; border-radius:50%; background:currentColor; animation:blink 1.1s infinite ease-in-out; }
-.dots i:nth-child(2){ animation-delay:.18s } .dots i:nth-child(3){ animation-delay:.36s }
-@keyframes blink { 0%,80%,100%{ opacity:.25 } 40%{ opacity:1 } }
-
-.chips { display:flex; flex-wrap:wrap; gap:8px; }
-.chip { border:1px solid var(--line); background:var(--sheet); color:var(--ink); border-radius:10px; padding:8px 12px; font:inherit; font-size:14px; text-align:left; cursor:pointer; }
-.chip:hover { border-color:var(--accent); }
-
-/* composer */
-.status { min-height:20px; padding:6px 20px 0; font-size:13px; color:var(--muted); }
-.status.warn { color:var(--note-ink); }
-.composer { display:flex; gap:8px; align-items:flex-end; padding:6px 18px 12px; }
-textarea {
-  flex:1; resize:none; max-height:140px; min-height:44px; border:1px solid var(--line); background:var(--sheet); color:var(--ink);
-  border-radius:22px; padding:10px 16px; font:inherit; font-size:16px; line-height:1.4;
-}
-.icon-btn { width:44px; height:44px; flex:none; border-radius:50%; border:1px solid var(--line); background:var(--sheet); color:var(--ink); display:grid; place-items:center; cursor:pointer; }
-.icon-btn svg { width:20px; height:20px; }
-.icon-btn.primary { background:var(--accent); border-color:var(--accent); color:var(--on-accent); }
-.icon-btn.rec { background:var(--trace); border-color:var(--trace); color:#fff; animation:pulse 1.3s infinite; }
-.icon-btn:disabled { opacity:.5; cursor:not-allowed; }
-@keyframes pulse { 0%{ box-shadow:0 0 0 0 color-mix(in srgb, var(--trace) 55%, transparent) } 100%{ box-shadow:0 0 0 12px transparent } }
-.fine { padding:0 20px 10px; font-size:12px; color:var(--muted); }
-@media (prefers-reduced-motion: reduce) { .icon-btn.rec, .dots i { animation:none } }
-&lt;/style&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;div class=&quot;app&quot;&gt;
-  &lt;div class=&quot;top&quot;&gt;
-    &lt;h1 class=&quot;brand&quot;&gt;QuakeGuard&lt;/h1&gt;
-    &lt;p class=&quot;tag&quot;&gt;Ask anything about earthquakes.&lt;/p&gt;
-  &lt;/div&gt;
-  &lt;div class=&quot;trace-wrap&quot;&gt;&lt;canvas id=&quot;trace&quot; aria-hidden=&quot;true&quot;&gt;&lt;/canvas&gt;&lt;/div&gt;
-
-
-  &lt;div class=&quot;controls&quot;&gt;
-    &lt;button class=&quot;pill&quot; id=&quot;speakToggle&quot; aria-pressed=&quot;false&quot; type=&quot;button&quot;&gt;
-      &lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;path d=&quot;M11 5 6 9H3v6h3l5 4V5z&quot;/&gt;&lt;path d=&quot;M15.5 8.5a5 5 0 0 1 0 7&quot;/&gt;&lt;path d=&quot;M18.5 5.5a9 9 0 0 1 0 13&quot;/&gt;&lt;/svg&gt;
-      &lt;span&gt;Speak answers&lt;/span&gt;
-    &lt;/button&gt;
-    &lt;button class=&quot;pill&quot; id=&quot;autoToggle&quot; aria-pressed=&quot;true&quot; type=&quot;button&quot;&gt;
-      &lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;path d=&quot;M22 2 11 13&quot;/&gt;&lt;path d=&quot;M22 2 15 22l-4-9-9-4 20-7z&quot;/&gt;&lt;/svg&gt;
-      &lt;span&gt;Send after dictating&lt;/span&gt;
-    &lt;/button&gt;
-    &lt;button class=&quot;pill&quot; id=&quot;stopVoice&quot; type=&quot;button&quot; hidden&gt;
-      &lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;currentColor&quot;&gt;&lt;rect x=&quot;6&quot; y=&quot;6&quot; width=&quot;12&quot; height=&quot;12&quot; rx=&quot;2&quot;/&gt;&lt;/svg&gt;
-      &lt;span&gt;Stop voice&lt;/span&gt;
-    &lt;/button&gt;
-  &lt;/div&gt;
-
-  &lt;div class=&quot;messages&quot; id=&quot;messages&quot; aria-live=&quot;polite&quot;&gt;
-  &lt;div class=&quot;note&quot; aria-live=&quot;off&quot;&gt;&lt;strong&gt;Ground shaking right now?&lt;/strong&gt; Drop, Cover, and Hold On. In an emergency, call your local emergency number.&lt;/div&gt;
-  &lt;details class=&quot;live&quot; id=&quot;live&quot; aria-live=&quot;off&quot;&gt;
-    &lt;summary id=&quot;liveSummary&quot;&gt;Loading earthquake activity&lt;/summary&gt;
-    &lt;ul id=&quot;liveList&quot;&gt;&lt;/ul&gt;
-    &lt;p class=&quot;src&quot; id=&quot;liveSource&quot;&gt;&lt;/p&gt;
-  &lt;/details&gt;
-  &lt;/div&gt;
-
-  &lt;div class=&quot;status&quot; id=&quot;status&quot; role=&quot;status&quot;&gt;&lt;/div&gt;
-  &lt;div class=&quot;composer&quot;&gt;
-    &lt;button class=&quot;icon-btn&quot; id=&quot;mic&quot; type=&quot;button&quot; aria-label=&quot;Dictate your question&quot; title=&quot;Dictate your question&quot;&gt;
-      &lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;rect x=&quot;9&quot; y=&quot;2&quot; width=&quot;6&quot; height=&quot;12&quot; rx=&quot;3&quot;/&gt;&lt;path d=&quot;M5 11a7 7 0 0 0 14 0&quot;/&gt;&lt;path d=&quot;M12 18v4&quot;/&gt;&lt;/svg&gt;
-    &lt;/button&gt;
-    &lt;textarea id=&quot;input&quot; rows=&quot;1&quot; placeholder=&quot;Ask about earthquakes&quot; aria-label=&quot;Your question&quot; autocomplete=&quot;off&quot; enterkeyhint=&quot;send&quot;&gt;&lt;/textarea&gt;
-    &lt;button class=&quot;icon-btn primary&quot; id=&quot;send&quot; type=&quot;button&quot; aria-label=&quot;Send question&quot; title=&quot;Send&quot;&gt;
-      &lt;svg id=&quot;sendIcon&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;path d=&quot;M12 19V5&quot;/&gt;&lt;path d=&quot;m5 12 7-7 7 7&quot;/&gt;&lt;/svg&gt;
-    &lt;/button&gt;
-  &lt;/div&gt;
-  &lt;div class=&quot;fine&quot;&gt;QuakeGuard cannot predict earthquakes. Live earthquake data comes from the USGS and can be delayed or revised. Safety and science answers are built in. For emergencies and official alerts, follow your local authorities.&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;script&gt;
-var QuakeEngine = (function () {
-  &quot;use strict&quot;;
-
-  var BASE = &quot;https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/&quot;;
-  var FEEDS = {
-    hour:  { url: BASE + &quot;all_hour.geojson&quot;,  floor: 0,   label: &quot;all magnitudes, past hour&quot; },
-    day:   { url: BASE + &quot;2.5_day.geojson&quot;,   floor: 2.5, label: &quot;M2.5 and higher, past 24 hours&quot; },
-    week:  { url: BASE + &quot;2.5_week.geojson&quot;,  floor: 2.5, label: &quot;M2.5 and higher, past 7 days&quot; },
-    month: { url: BASE + &quot;4.5_month.geojson&quot;, floor: 4.5, label: &quot;M4.5 and higher, past 30 days&quot; }
-  };
-
-  /* ---------- feed parsing and small helpers ---------- */
-  function parseFeed(j) {
-    return {
-      generated: j.metadata &amp;&amp; j.metadata.generated,
-      rows: j.features.map(function (f) {
-        var p = f.properties || {}, c = (f.geometry &amp;&amp; f.geometry.coordinates) || [];
-        return { mag: p.mag, place: p.place || &quot;unknown location&quot;, time: p.time, depth: c[2], lat: c[1], lon: c[0],
-                 tsunami: p.tsunami, alert: p.alert, felt: p.felt };
-      }).filter(function (r) { return r.mag != null &amp;&amp; r.time != null; })
-    };
-  }
-  function pad(n) { return n &lt; 10 ? &quot;0&quot; + n : &quot;&quot; + n; }
-  function fmtUTC(ms) {
-    var d = new Date(ms);
-    return d.getUTCFullYear() + &quot;-&quot; + pad(d.getUTCMonth() + 1) + &quot;-&quot; + pad(d.getUTCDate()) + &quot; &quot; + pad(d.getUTCHours()) + &quot;:&quot; + pad(d.getUTCMinutes()) + &quot; UTC&quot;;
-  }
-  function agoText(ms, now) {
-    var m = Math.max(0, Math.round((now - ms) / 60000));
-    if (m &lt; 60) return m + &quot; min ago&quot;;
-    if (m &lt; 2880) return Math.floor(m / 60) + &quot; h &quot; + (m % 60) + &quot; min ago&quot;;
-    return Math.round(m / 1440) + &quot; days ago&quot;;
-  }
-  function norm(s) {
-    return String(s).toLowerCase().normalize(&quot;NFD&quot;).replace(/[\u0300-\u036f]/g, &quot;&quot;).replace(/[^a-z0-9.+ ]/g, &quot; &quot;).replace(/\s+/g, &quot; &quot;).trim();
-  }
-  function prep(text) {
-    var t = norm(text);
-    return t.replace(/\bunited states( of america)?\b/g, &quot;usa&quot;).replace(/\bu\.s\.a?\.?(?=\s|$)/g, &quot;usa&quot;)
-            .replace(/\b(in|of|for|across|within|near) (the )?us\b/g, &quot;$1 usa&quot;).replace(/\s+/g, &quot; &quot;).trim();
-  }
-  function km(a, b, c, d) {
-    var R = 6371, r = Math.PI / 180, dLat = (c - a) * r, dLon = (d - b) * r;
-    var h = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(a * r) * Math.cos(c * r) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
-    return 2 * R * Math.asin(Math.sqrt(h));
-  }
-  function title(s) { return s.replace(/\b[a-z]/g, function (c) { return c.toUpperCase(); }); }
-
-  /* ---------- places the engine can measure distance from ---------- */
-  var GAZ = {
-    &quot;delhi&quot;: [28.61, 77.21], &quot;mumbai&quot;: [19.08, 72.88], &quot;chennai&quot;: [13.08, 80.27], &quot;kolkata&quot;: [22.57, 88.36],
-    &quot;bengaluru&quot;: [12.97, 77.59], &quot;bangalore&quot;: [12.97, 77.59], &quot;hyderabad&quot;: [17.39, 78.49], &quot;kochi&quot;: [9.93, 76.27],
-    &quot;cochin&quot;: [9.93, 76.27], &quot;kerala&quot;: [10.5, 76.4, 250], &quot;thiruvananthapuram&quot;: [8.52, 76.94], &quot;trivandrum&quot;: [8.52, 76.94],
-    &quot;kozhikode&quot;: [11.25, 75.78], &quot;calicut&quot;: [11.25, 75.78],
-    &quot;dubai&quot;: [25.2, 55.27], &quot;abu dhabi&quot;: [24.45, 54.38], &quot;doha&quot;: [25.29, 51.53], &quot;riyadh&quot;: [24.71, 46.68], &quot;muscat&quot;: [23.59, 58.41],
-    &quot;karachi&quot;: [24.86, 67.0], &quot;lahore&quot;: [31.55, 74.34], &quot;islamabad&quot;: [33.68, 73.05], &quot;kathmandu&quot;: [27.72, 85.32],
-    &quot;dhaka&quot;: [23.81, 90.41], &quot;colombo&quot;: [6.93, 79.86], &quot;tehran&quot;: [35.69, 51.39], &quot;istanbul&quot;: [41.01, 28.98], &quot;ankara&quot;: [39.93, 32.86],
-    &quot;cairo&quot;: [30.04, 31.24], &quot;tokyo&quot;: [35.68, 139.69], &quot;osaka&quot;: [34.69, 135.5], &quot;seoul&quot;: [37.57, 126.98], &quot;beijing&quot;: [39.9, 116.41],
-    &quot;taipei&quot;: [25.03, 121.57], &quot;manila&quot;: [14.6, 120.98], &quot;jakarta&quot;: [-6.21, 106.85], &quot;singapore&quot;: [1.35, 103.82], &quot;bangkok&quot;: [13.76, 100.5],
-    &quot;wellington&quot;: [-41.29, 174.78], &quot;auckland&quot;: [-36.85, 174.76], &quot;sydney&quot;: [-33.87, 151.21], &quot;los angeles&quot;: [34.05, -118.24],
-    &quot;san francisco&quot;: [37.77, -122.42], &quot;seattle&quot;: [47.61, -122.33], &quot;anchorage&quot;: [61.22, -149.9], &quot;honolulu&quot;: [21.31, -157.86],
-    &quot;mexico city&quot;: [19.43, -99.13], &quot;lima&quot;: [-12.05, -77.04], &quot;santiago&quot;: [-33.45, -70.67], &quot;bogota&quot;: [4.71, -74.07],
-    &quot;london&quot;: [51.51, -0.13], &quot;rome&quot;: [41.9, 12.5], &quot;athens&quot;: [37.98, 23.73], &quot;lisbon&quot;: [38.72, -9.14], &quot;new york&quot;: [40.71, -74.01]
-  };
-  var ALIAS = {
-    california: /\bcalifornia\b|\bca$/,
-    usa: /\b(alaska|hawaii|california|nevada|oregon|washington|idaho|montana|wyoming|utah|arizona|new mexico|texas|oklahoma|kansas|missouri|tennessee|kentucky|arkansas|colorado|south carolina|north carolina|virginia|new york)\b|\b(ak|ca|hi|nv|or|wa|id|mt|wy|ut|az|nm|tx|ok|ks|mo|tn|ky|ar|co|sc|nc|va|ny)$/,
-    uk: /\b(england|scotland|wales|united kingdom|northern ireland)\b/,
-    uae: /\bunited arab emirates\b|\bemirates\b/,
-    emirates: /\bunited arab emirates\b|\bemirates\b/,
-    turkey: /\b(turkey|turkiye)\b/
-  };
-  var STOP = (&quot;the a an is are was were there any in on at of near around within from to for last past latest recent recently newest current &quot; +
-    &quot;currently now today tonight this that these those week weeks month months hour hours day days minute minutes ago earthquake earthquakes quake quakes &quot; +
-    &quot;tremor tremors seismic seismicity activity happening happened happen happens occur occurred occurring strongest biggest largest worst highest most &quot; +
-    &quot;powerful strong stronger bigger big large major serious dangerous significant notable small minor how many much number count total what whats which &quot; +
-    &quot;where when show tell me us about have has had been be did do does and or with magnitude mag above over greater than more at least tsunami tsunamis &quot; +
-    &quot;warning warnings alert alerts flag flags m plus higher just yesterday year location my nearby you please can could get give list i it no not only &quot; +
-    &quot;still ongoing aftershock aftershocks region country area areas places place anywhere worldwide world global globally some anything felt reported &quot; +
-    &quot;report reports seen see check status update updates info information data live real time realtime exceeding minimum equal or right here close &quot; +
-    &quot;shaking shake shocks shock &quot;).split(&quot; &quot;);
-
-  function placeTokens(t) {
-    return t.split(&quot; &quot;).filter(function (w) {
-      return w &amp;&amp; w.length &gt; 1 &amp;&amp; STOP.indexOf(w) &lt; 0 &amp;&amp; !/^[\d.+]+$/.test(w) &amp;&amp; !/^m\d/.test(w);
-    });
-  }
-  function findCity(t) {
-    var best = null;
-    Object.keys(GAZ).forEach(function (name) {
-      if (new RegExp(&quot;\\b&quot; + name + &quot;\\b&quot;).test(t) &amp;&amp; (!best || name.length &gt; best.length)) best = name;
-    });
-    return best;
-  }
-  function textMatch(row, tokens) {
-    var p = norm(row.place);
-    return tokens.every(function (w) { return ALIAS[w] ? ALIAS[w].test(p) : new RegExp(&quot;\\b&quot; + w + &quot;\\b&quot;).test(p); });
-  }
-
-  /* ---------- reading the question ---------- */
-  function parseWindow(t) {
-    var m = t.match(/\blast (\d+) (hours?|days?)\b/);
-    if (m) {
-      var n = parseInt(m[1], 10), hrs = /^day/.test(m[2]) ? n * 24 : n;
-      var key = hrs &lt;= 1 ? &quot;hour&quot; : hrs &lt;= 24 ? &quot;day&quot; : hrs &lt;= 168 ? &quot;week&quot; : &quot;month&quot;;
-      return { key: key, cutoffMs: hrs * 3600000, span: &quot;in the last &quot; + n + &quot; &quot; + m[2] };
-    }
-    if (/\b(hour|60 minutes|right now|just now|minutes? ago|this minute)\b/.test(t)) return { key: &quot;hour&quot;, span: &quot;in the last hour&quot; };
-    if (/\b(month|30 days|thirty days)\b/.test(t)) return { key: &quot;month&quot;, span: &quot;in the last 30 days&quot; };
-    if (/\b(week|7 days|seven days)\b/.test(t)) return { key: &quot;week&quot;, span: &quot;in the last 7 days&quot; };
-    return { key: &quot;day&quot;, span: &quot;in the last 24 hours&quot; };
-  }
-  function parseMinMag(t) {
-    var m = t.match(/\b(?:above|over|greater than|more than|at least|stronger than|bigger than|higher than|exceeding|minimum)\s*(?:m|mag(?:nitude)?\s*)?(\d(?:\.\d)?)\b/) ||
-            t.match(/\bm\s?(\d(?:\.\d)?)\b/) ||
-            t.match(/\bmag(?:nitude)?\s*(\d(?:\.\d)?)\b/) ||
-            t.match(/\b(\d(?:\.\d)?)\s*(?:\+|plus\b|or (?:more|higher|above|greater|stronger)|and (?:above|higher|up|over))/);
-    return m ? parseFloat(m[1]) : 0;
-  }
-  function detectKind(t) {
-    if (/\btsunami/.test(t)) return &quot;tsunami&quot;;
-    if (/\b(how many|number of|count|total)\b/.test(t)) return &quot;count&quot;;
-    if (/\b(strongest|biggest|largest|worst|highest|most powerful|greatest)\b/.test(t)) return &quot;strongest&quot;;
-    return &quot;latest&quot;;
-  }
-  function isLive(t) {
-    var cue = /\b(latest|recent|recently|newest|current|currently|now|today|tonight|yesterday|this week|this month|past (hour|day|week|month|24)|last (hour|day|week|month|24|\d+)|just happened|right now|any (earthquakes?|quakes?|tremors?|seismic)|were there|was there|is there|are there|strongest|biggest|largest|highest|how many|count|number of|happening|activity|near me|nearby|around me|near here)\b/;
-    var topic = /\b(earthquakes?|quakes?|tremors?|seismic|shaking|magnitude|tsunamis?|aftershocks?)\b/;
-    if (cue.test(t) &amp;&amp; (topic.test(t) || /\b(near me|nearby|around me)\b/.test(t))) return true;
-    var asksHow = /^(why|how (do|does|can|to)|what (causes|should|to|is an?|is the (difference|meaning))|can (we|you|i)|should)\b/.test(t);
-    var inPlace = /\b(near|around|close to|in|at)\s+(?!an?\b|the\b|case\b|\d|home\b|school\b|work\b|office\b|night\b|bed\b|car\b|building|apartment|house\b|general\b|public\b|class|kitchen\b|bathroom\b|elevator\b|mall\b|train\b|bus\b|time\b|general\b|advance\b|future\b|india\b.*(zone|building)|my\b)[a-z]/.test(t);
-    return topic.test(t) &amp;&amp; inPlace &amp;&amp; !asksHow;
-  }
-
-  /* ---------- answering from live data ---------- */
-  function line(r, now, extra) {
-    return &quot;M&quot; + Number(r.mag).toFixed(1) + &quot;, &quot; + r.place + &quot;, &quot; + fmtUTC(r.time) + &quot; (&quot; + agoText(r.time, now) + &quot;)&quot; +
-      (r.depth != null &amp;&amp; extra ? &quot;, depth &quot; + Math.max(0, Math.round(r.depth)) + &quot; km&quot; : &quot;&quot;) +
-      (r.tsunami ? &quot;, tsunami flag set&quot; : &quot;&quot;);
-  }
-  var BINS = [[-9, 2.5, &quot;under M2.5&quot;], [2.5, 4, &quot;M2.5 to 3.9&quot;], [4, 5, &quot;M4.0 to 4.9&quot;], [5, 6, &quot;M5.0 to 5.9&quot;], [6, 7, &quot;M6.0 to 6.9&quot;], [7, 99, &quot;M7.0 and higher&quot;]];
-
-  async function live(rawText, t, helpers) {
-    var now = helpers.now ? helpers.now() : Date.now();
-    var kind = detectKind(t), win = parseWindow(t), minMag = parseMinMag(t);
-    var wantsNear = /\b(near me|nearby|around me|close to me|near here|around here|my location|my area|where i am)\b/.test(t);
-    var feed = FEEDS[win.key];
-
-    var data = await helpers.fetchFeed(win.key);
-    var rows = data.rows.slice();
-    if (win.cutoffMs) rows = rows.filter(function (r) { return r.time &gt;= now - win.cutoffMs; });
-
-    var scope = &quot;worldwide&quot;, notes = [];
-    if (wantsNear) {
-      var loc;
-      try { loc = await helpers.getLocation(); }
-      catch (e) {
-        return { text: &quot;I could not get your location. Allow location access in your browser, or name a city or country instead, for example \&quot;earthquakes near Tokyo\&quot;.&quot; };
-      }
-      rows = rows.filter(function (r) { return r.lat != null &amp;&amp; km(loc.lat, loc.lon, r.lat, r.lon) &lt;= 500; });
-      scope = &quot;within 500 km of your location&quot;;
-    } else {
-      var tokens = placeTokens(t), city = findCity(t);
-      if (city) {
-        var g = GAZ[city], radius = g[2] || 300;
-        rows = rows.filter(function (r) { return r.lat != null &amp;&amp; km(g[0], g[1], r.lat, r.lon) &lt;= radius; });
-        scope = &quot;within &quot; + radius + &quot; km of &quot; + title(city);
-      } else if (tokens.length) {
-        rows = rows.filter(function (r) { return textMatch(r, tokens); });
-        scope = &quot;in or near &quot; + title(tokens.join(&quot; &quot;));
-      }
-    }
-    if (minMag &gt; 0) { rows = rows.filter(function (r) { return r.mag &gt;= minMag; }); scope += (scope === &quot;worldwide&quot; ? &quot;, &quot; : &quot;, &quot;) + &quot;M&quot; + minMag + &quot; and higher&quot;; }
-    if (minMag &gt; 0 &amp;&amp; minMag &lt; feed.floor) notes.push(&quot;This feed only includes M&quot; + feed.floor + &quot; and higher.&quot;);
-
-    var meta = &quot;Live USGS data, fetched &quot; + fmtUTC(data.fetchedAt || now) + &quot;. Feed: &quot; + feed.label + &quot;.&quot;;
-    var span = win.span;
-    var head, body = [];
-
-    if (kind === &quot;tsunami&quot;) {
-      var ts = rows.filter(function (r) { return r.tsunami; }).sort(function (a, b) { return b.time - a.time; });
-      head = ts.length
-        ? ts.length + &quot; earthquake&quot; + (ts.length &gt; 1 ? &quot;s&quot; : &quot;&quot;) + &quot; &quot; + span + &quot; (&quot; + scope + &quot;) carried the USGS tsunami flag:&quot;
-        : &quot;No earthquakes &quot; + span + &quot; (&quot; + scope + &quot;) carried the USGS tsunami flag.&quot;;
-      ts.slice(0, 5).forEach(function (r) { body.push(&quot;- &quot; + line(r, now, true)); });
-      body.push(&quot;&quot;);
-      body.push(&quot;The flag means the earthquake was large and under or near an ocean, so tsunami messages may exist. It does not confirm a tsunami. For official warnings, check your national tsunami warning centre, for example INCOIS in India or tsunami.gov in the USA.&quot;);
-    } else if (!rows.length) {
-      head = &quot;No earthquakes &quot; + span + &quot; (&quot; + scope + &quot;) were listed in this feed.&quot;;
-      body.push(&quot;Smaller earthquakes than the feed covers are not included, and the USGS may list quakes in some regions late.&quot;);
-      if (scope !== &quot;worldwide&quot; &amp;&amp; !/within|your location/.test(scope)) body.push(&quot;If that is not a place name I recognise, try a country, a city or a region, for example \&quot;earthquakes in Japan\&quot;.&quot;);
-      body.push(&quot;For local reports, check your national seismology agency.&quot;);
-    } else if (kind === &quot;count&quot;) {
-      head = rows.length + &quot; earthquake&quot; + (rows.length &gt; 1 ? &quot;s&quot; : &quot;&quot;) + &quot; &quot; + span + &quot; (&quot; + scope + &quot;):&quot;;
-      BINS.forEach(function (b) {
-        var n = rows.filter(function (r) { return r.mag &gt;= b[0] &amp;&amp; r.mag &lt; b[1]; }).length;
-        if (n) body.push(&quot;- &quot; + b[2] + &quot;: &quot; + n);
-      });
-      var top = rows.slice().sort(function (a, b) { return b.mag - a.mag || b.time - a.time; })[0];
-      body.push(&quot;&quot;);
-      body.push(&quot;Strongest: &quot; + line(top, now, true) + &quot;.&quot;);
-    } else if (kind === &quot;strongest&quot;) {
-      var sorted = rows.slice().sort(function (a, b) { return b.mag - a.mag || b.time - a.time; });
-      head = &quot;The strongest earthquake &quot; + span + &quot; (&quot; + scope + &quot;) was &quot; + line(sorted[0], now, true) + &quot;.&quot;;
-      if (sorted[0].alert) body.push(&quot;USGS PAGER alert level: &quot; + sorted[0].alert + &quot;.&quot;);
-      if (sorted.length &gt; 1) {
-        body.push(&quot;Next strongest:&quot;);
-        sorted.slice(1, 4).forEach(function (r) { body.push(&quot;- &quot; + line(r, now, false)); });
-      }
-    } else {
-      var latest = rows.slice().sort(function (a, b) { return b.time - a.time; });
-      head = &quot;Latest earthquakes &quot; + span + &quot; (&quot; + scope + &quot;), newest first:&quot;;
-      latest.slice(0, 5).forEach(function (r) { body.push(&quot;- &quot; + line(r, now, false)); });
-      if (latest.length &gt; 5) body.push(&quot;There were &quot; + latest.length + &quot; in total.&quot;);
-    }
-    notes.forEach(function (n) { body.push(n); });
-    return { text: [head].concat(body).join(&quot;\n&quot;), meta: meta };
-  }
-
-  /* ---------- built-in knowledge ---------- */
-  var EARLY = [
-    { re: /\b(who are you|what are you|your name|are you (an? )?(ai|bot|robot|human|real|person)|about you|about yourself|what can you do|what do you do|the ai|this ai|the bot|this bot|the assistant|this assistant|the chatbot|this chatbot)\b/,
-      a: &quot;I am QuakeGuard, who is here to answer earthquake related queries. I&#x27;m an automated assistant, not a person. Ask me about recent earthquakes anywhere in the world, or about earthquake safety and science.&quot; },
-    { re: /^(hi|hello|hey|hii|namaste|salam|hola|good (morning|afternoon|evening))\b/, max: 28,
-      a: &quot;Hello, I&#x27;m QuakeGuard. Ask me about recent earthquake activity, earthquake safety, or how earthquakes work.&quot; },
-    { re: /\b(thanks|thank you|thx|cheers)\b/, max: 40, a: &quot;You&#x27;re welcome. Ask me anything else about earthquakes.&quot; },
-    { re: /(biggest|largest|strongest|worst|most powerful|deadliest).*(ever|in history|on record|of all time|recorded)|\b(ever recorded|all time)\b/,
-      a: &quot;The strongest earthquake ever recorded was the 1960 Valdivia (Great Chilean) earthquake, magnitude 9.5.\n- 1964 Alaska: M9.2\n- 2004 Sumatra and the Indian Ocean: about M9.1 to 9.3, which caused a tsunami that killed around 230,000 people\n- 2011 Tohoku, Japan: M9.1\nThe deadliest on record is generally cited as the 1556 Shaanxi earthquake in China.&quot; },
-    { re: /how many (earthquakes|quakes).*(year|annual|every|each|per|day)|(per|each|every) year|a year\b/,
-      a: &quot;Millions of earthquakes happen every year, but most are too small to feel or even detect. The USGS locates around 20,000 a year. Roughly, each year there is about 1 earthquake of magnitude 8 or more, about 15 between M7 and 7.9, about 130 between M6 and 6.9, and over 1,000 between M5 and 5.9.&quot; },
-    { re: /\b(doorway|door frame|triangle of life)\b/,
-      a: &quot;Standing in a doorway is not the safest choice in modern buildings. Doorways are not stronger than the rest of the structure, and falling objects can still hit you.\nDrop, Cover, and Hold On is the recommended response: get low, take cover under a sturdy table or desk, and hold on until the shaking stops.&quot; }
-  ];
-  var KB = [
-    { re: /\b(difference|vs|versus).*(magnitude|intensity)|(magnitude|intensity).*(difference|vs|versus)|richter|mercalli|moment magnitude|logarithmic|how (is|are).*(earthquakes? )?(measured|rated)/,
-      a: &quot;Magnitude is the energy released at the earthquake&#x27;s source. Each quake has one magnitude. Today it is reported as moment magnitude (Mw), which replaced the older Richter scale. The scale is logarithmic: each whole step is about 10 times larger ground motion and roughly 32 times more energy.\nIntensity is how strong the shaking and damage were at a particular place. It is measured on the Modified Mercalli scale (I to XII) and changes with distance, depth and local ground conditions.&quot; },
-    { re: /(what|how).*(does|do|is|are|would).*(m ?\d|magnitude \d|magnitude mean|strong)|magnitude levels|how strong is/,
-      a: &quot;USGS classes by magnitude:\n- Under 3: micro, usually not felt\n- 3 to 3.9: minor, often felt, rarely causes damage\n- 4 to 4.9: light, noticeable shaking, little damage\n- 5 to 5.9: moderate, can damage poorly built buildings\n- 6 to 6.9: strong, can be destructive within about 100 km\n- 7 to 7.9: major, serious damage over a large area\n- 8 and higher: great, can destroy communities near the centre\nDepth and distance also matter a lot.&quot; },
-    { re: /emergency kit|go bag|survival kit|supplies|what (should|to).*(keep|pack|have).*(earthquake|kit)|kit.*earthquake/,
-      a: &quot;An earthquake emergency kit should cover at least 3 days, ideally more:\n- Water: about 4 litres per person per day\n- Non-perishable food and a can opener\n- First aid kit and regular medicines\n- Torch with spare batteries, and a whistle\n- Battery or hand-crank radio and a power bank\n- Sturdy shoes, warm clothes, a blanket\n- Dust masks, hygiene items, a basic tool set\n- Copies of important documents and some cash\n- Items for children, older family members and pets\nKeep it where you can reach it quickly.&quot; },
-    { re: /(what|how).*(do|should|to).*(during|while|when).*(earthquake|shaking|quake)|during (an |the )?(earthquake|shaking)|when the ground (shakes|is shaking)|earthquake happens|drop,? cover|if (there is|there s) an earthquake|(what|how) (to|should i|do i|can i) (do|act|react|respond|stay safe) (in|if|when|during) (an |the )?(earthquake|quake)/,
-      a: &quot;Drop, Cover, and Hold On:\n1. Drop to your hands and knees.\n2. Cover your head and neck under a sturdy table or desk, or against an inside wall away from windows.\n3. Hold On until the shaking stops.\nAlso:\n- Stay inside. Do not run out or use elevators.\n- In bed, stay there and protect your head with a pillow.\n- Outdoors, move away from buildings, trees and power lines, then drop.\n- In a car, pull over in a clear area and stay inside with your seatbelt on.\n- Near the coast, if shaking is strong or long, move to high ground right away.&quot; },
-    { re: /after (an |the )?(earthquake|shaking|quake)|(what|how).*(do|should).*(after)|once the shaking (stops|ends)/,
-      a: &quot;After the shaking stops:\n- Expect aftershocks. Drop, Cover, and Hold On again if they come.\n- Check yourself and others for injuries. Call your emergency number for serious ones.\n- Put on sturdy shoes and watch for broken glass.\n- If you smell gas or hear hissing, open windows, shut off the gas if you can, and leave. Do not use matches or switches.\n- Stay out of damaged buildings.\n- Use text messages instead of calls to keep phone lines free.\n- If you are near the coast and the shaking was strong, move to high ground at once.\n- Follow official updates.&quot; },
-    { re: /prepar|before (an |the )?earthquake|be ready|get ready|family plan|secure (furniture|heavy)|retrofit|how can i (stay safe|protect)|earthquake safety|stay safe|safe (place|spot)|what should i do$/,
-      a: &quot;To prepare before an earthquake:\n- Make a family plan: a meeting place and an out-of-area contact.\n- Prepare an emergency kit for at least 3 days.\n- Fix tall furniture, shelves, water heaters and heavy items to the wall. Keep heavy objects on low shelves.\n- Learn how to shut off gas, water and electricity.\n- Know your safe spots: under sturdy tables, away from windows and heavy objects.\n- Practise Drop, Cover, and Hold On.\n- Check if your building is built or retrofitted for earthquakes.&quot; },
-    { re: /what (is|are) (an? )?(earthquake|quake)s?\b|define earthquake|meaning of earthquake|earthquakes? (definition|means?)/,
-      a: &quot;An earthquake is the shaking of the ground caused by a sudden release of energy in the Earth&#x27;s crust. Rock that has been slowly stressed along a fault suddenly slips, and the energy travels outward as seismic waves.&quot; },
-    { re: /\b(cause|causes|caused|why do earthquakes|how do earthquakes|tectonic|plate|plates|fault|faults)\b/,
-      a: &quot;Earth&#x27;s outer shell is broken into tectonic plates that move slowly, a few centimetres a year. At faults, plates can lock together while stress builds. When the stress becomes greater than the friction holding the rock, it slips suddenly and releases energy as seismic waves, which we feel as an earthquake.\nMost earthquakes happen along plate boundaries. A small number are caused by volcanic activity or by human activity such as mining, reservoirs or deep fluid injection.&quot; },
-    { re: /aftershock|foreshock|mainshock|main shock/,
-      a: &quot;An aftershock is a smaller earthquake that follows a larger one (the mainshock) in the same area as the crust adjusts. Aftershocks become less frequent over time but can continue for days, months or even years after a big earthquake, and they can still damage weakened buildings.\nA foreshock is a smaller quake that comes before a larger one. It can only be recognised as a foreshock afterwards.&quot; },
-    { re: /early warning|shakealert|sasmex/,
-      a: &quot;Earthquake early warning systems detect the first, faster waves near the epicentre and send alerts before the strongest shaking arrives. They give seconds to tens of seconds of notice, enough to Drop, Cover, and Hold On, slow trains or open fire station doors. Systems operate in places such as Japan, Mexico and the US West Coast.&quot; },
-    { re: /predict|forecast|can (scientists|we) know|know when|before it happens/,
-      a: &quot;No. Scientists cannot predict the exact time, place and size of an earthquake. They can estimate long-term probabilities for a region, forecast aftershocks after a big quake, and some countries run early warning systems that alert you seconds after a quake starts. Be wary of anyone claiming to predict a specific earthquake.&quot; },
-    { re: /tsunami/,
-      a: &quot;A tsunami is a series of long ocean waves, most often triggered by a large earthquake under or near the sea floor.\nNatural warning signs near the coast: strong or long shaking, a sudden rise or fall of the sea, or a loud roar from the ocean.\nWhat to do: move to high ground or inland immediately and do not wait for an official warning. Stay away until officials say it is safe, because waves can keep arriving for hours.\nFor official alerts, follow your national tsunami warning centre.&quot; },
-    { re: /seismograph|seismometer|seismogram|how (do|are).*(locate|detect|find)|epicent|p wave|s wave|seismic wave/,
-      a: &quot;A seismograph has a heavy mass that stays almost still while the ground moves under it, and it records that motion as a seismogram. Earthquakes send out faster P waves and slower S waves. By comparing when they reach at least three stations, scientists can work out where the earthquake happened (the epicentre) and how deep it was.&quot; },
-    { re: /\b(depth|deep|shallow|focus|hypocent)/,
-      a: &quot;Earthquake depth is how far below the surface the rupture starts. Shallow earthquakes are 0 to 70 km deep, intermediate 70 to 300 km, and deep 300 to 700 km. Shallow earthquakes usually cause the most damage for their magnitude because they are closer to the surface.&quot; },
-    { re: /ring of fire|pacific ring|where do (most )?earthquakes|earthquake zones?|earthquake belt/,
-      a: &quot;About 90 percent of the world&#x27;s earthquakes happen along the Ring of Fire, a horseshoe-shaped belt around the Pacific Ocean where several plates meet. Other active belts run through the Mediterranean and Himalaya (the Alpide belt) and along mid-ocean ridges.&quot; },
-    { re: /india.*(seismic|zone|earthquake)|(seismic|zone).*india|national center for seismology|ncs\b|incois/,
-      a: &quot;India&#x27;s building code divides the country into seismic zones II to V, where V is the highest hazard. Zone V includes much of the Northeast, parts of the Himalayan region and Kutch. India&#x27;s National Center for Seismology (seismo.gov.in) reports earthquakes in and around India, and INCOIS issues tsunami advisories for the Indian Ocean.&quot; }
-  ];
-
-  function fallback(t) {
-    var onTopic = /\b(earthquakes?|quakes?|seismic|tremors?|tsunamis?|fault|magnitude|aftershocks?|tectonic|richter|epicent\w*)\b/.test(t);
-    if (onTopic) {
-      return { text: &quot;I don&#x27;t have an answer for that yet. Try asking about recent earthquakes (for example \&quot;strongest earthquake today\&quot; or \&quot;earthquakes near Tokyo\&quot;), or about safety, preparation, causes, magnitude or tsunamis.&quot; };
-    }
-    return { text: &quot;I only answer earthquake related queries. You can ask about recent earthquakes anywhere in the world, what to do during one, how to prepare, or how earthquakes work.&quot; };
-  }
-
-  async function answer(text, helpers) {
-    var t = prep(text);
-    if (!t) return { text: &quot;Ask me about recent earthquakes or earthquake safety.&quot; };
-    for (var i = 0; i &lt; EARLY.length; i++) {
-      if (EARLY[i].re.test(t) &amp;&amp; (!EARLY[i].max || t.length &lt;= EARLY[i].max)) return { text: EARLY[i].a };
-    }
-    if (isLive(t)) return live(text, t, helpers);
-    for (var j = 0; j &lt; KB.length; j++) if (KB[j].re.test(t)) return { text: KB[j].a };
-    return fallback(t);
-  }
-
-  return { answer: answer, parseFeed: parseFeed, fmtUTC: fmtUTC, agoText: agoText, FEEDS: FEEDS, _t: { prep: prep, parseMinMag: parseMinMag, parseWindow: parseWindow, isLive: isLive, placeTokens: placeTokens } };
-})();
-if (typeof module !== &quot;undefined&quot;) module.exports = QuakeEngine;
-
-&lt;/script&gt;
-&lt;script&gt;
-(function () {
-  &quot;use strict&quot;;
-
-
-  var $ = function (id) { return document.getElementById(id); };
-  var messagesEl = $(&quot;messages&quot;), input = $(&quot;input&quot;), sendBtn = $(&quot;send&quot;), micBtn = $(&quot;mic&quot;),
-      statusEl = $(&quot;status&quot;), speakToggle = $(&quot;speakToggle&quot;), autoToggle = $(&quot;autoToggle&quot;),
-      stopVoiceBtn = $(&quot;stopVoice&quot;), sendIcon = $(&quot;sendIcon&quot;);
-
-  var ICON_SEND = &#x27;&lt;path d=&quot;M12 19V5&quot;/&gt;&lt;path d=&quot;m5 12 7-7 7 7&quot;/&gt;&#x27;;
-  var ICON_STOP = &#x27;&lt;rect x=&quot;6&quot; y=&quot;6&quot; width=&quot;12&quot; height=&quot;12&quot; rx=&quot;2&quot; fill=&quot;currentColor&quot;/&gt;&#x27;;
-  var ICON_LISTEN = &#x27;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;path d=&quot;M11 5 6 9H3v6h3l5 4V5z&quot;/&gt;&lt;path d=&quot;M15.5 8.5a5 5 0 0 1 0 7&quot;/&gt;&lt;/svg&gt;&#x27;;
-
-  var KEYBOARD_TIP = &quot;Tip: tap the microphone key on your phone or computer keyboard to dictate into the box.&quot;;
-
-  /* shared activity state, drives the seismograph trace */
-  var level = { thinking: false, listening: false, speaking: false, burst: 0 };
-
-  /* ---------- settings (kept in this browser only) ---------- */
-  var settings = { speak: false, auto: true };
-  try {
-    var saved = JSON.parse(localStorage.getItem(&quot;quakeguard&quot;) || &quot;{}&quot;);
-    if (typeof saved.speak === &quot;boolean&quot;) settings.speak = saved.speak;
-    if (typeof saved.auto === &quot;boolean&quot;) settings.auto = saved.auto;
-  } catch (e) {}
-  function saveSettings() { try { localStorage.setItem(&quot;quakeguard&quot;, JSON.stringify(settings)); } catch (e) {} }
-  function paintToggles() {
-    speakToggle.setAttribute(&quot;aria-pressed&quot;, String(settings.speak));
-    autoToggle.setAttribute(&quot;aria-pressed&quot;, String(settings.auto));
-  }
-  paintToggles();
-  function setStatus(msg, warn) { statusEl.textContent = msg || &quot;&quot;; statusEl.className = &quot;status&quot; + (warn ? &quot; warn&quot; : &quot;&quot;); }
-  speakToggle.onclick = function () {
-    settings.speak = !settings.speak; paintToggles(); saveSettings();
-    if (!settings.speak) stopSpeaking();
-    setStatus(settings.speak ? &quot;Answers will be read aloud.&quot; : &quot;Voice answers are off.&quot;);
-  };
-  autoToggle.onclick = function () {
-    settings.auto = !settings.auto; paintToggles(); saveSettings();
-    setStatus(settings.auto ? &quot;Dictated questions are sent automatically.&quot; : &quot;Dictated questions wait for you to press send.&quot;);
-  };
-
-  /* ---------- live data: this page asks the USGS directly ---------- */
-  var fmtUTC = QuakeEngine.fmtUTC;
-  function mag(x) { return Number(x).toFixed(1); }
-  var feedCache = {};
-  async function getFeed(key, signal) {
-    var c = feedCache[key];
-    if (c &amp;&amp; Date.now() - c.at &lt; 60000) return c.data;
-    var inner = new AbortController(), to = setTimeout(function () { inner.abort(); }, 12000);
-    if (signal) signal.addEventListener(&quot;abort&quot;, function () { inner.abort(); });
-    try {
-      var r = await fetch(QuakeEngine.FEEDS[key].url, { signal: inner.signal });
-      if (!r.ok) throw new Error(&quot;USGS responded &quot; + r.status);
-      var data = QuakeEngine.parseFeed(await r.json());
-      data.fetchedAt = Date.now();
-      feedCache[key] = { at: data.fetchedAt, data: data };
-      return data;
-    } finally { clearTimeout(to); }
-  }
-  function getLocation() {
-    return new Promise(function (resolve, reject) {
-      if (!navigator.geolocation) return reject(new Error(&quot;unsupported&quot;));
-      navigator.geolocation.getCurrentPosition(
-        function (p) { resolve({ lat: p.coords.latitude, lon: p.coords.longitude }); },
-        reject, { timeout: 10000, maximumAge: 600000 });
-    });
-  }
-
-  var quakeRows = [], quakeUpdated = 0;
-  async function refreshPanel() {
-    var failed = false;
-    try { var d = await getFeed(&quot;day&quot;); quakeRows = d.rows; quakeUpdated = d.fetchedAt; }
-    catch (e) { failed = true; }
-    renderPanel(failed);
-  }
-  function renderPanel(failed) {
-    if (!quakeRows.length) {
-      $(&quot;liveSummary&quot;).textContent = failed ? &quot;Could not load live earthquake data.&quot; : &quot;No earthquakes of M2.5 or higher in the past 24 hours.&quot;;
-      $(&quot;liveSource&quot;).textContent = failed ? &quot;Check your internet connection. If this file is open inside a preview that blocks outside connections, open it directly in Chrome, Edge or Safari. It retries every 2 minutes.&quot; : &quot;&quot;;
-      return;
-    }
-    var top = quakeRows.slice().sort(function (a, b) { return b.mag - a.mag; }).slice(0, 5);
-    $(&quot;liveSummary&quot;).textContent = &quot;Past 24 hours: &quot; + quakeRows.length + &quot; earthquakes of M2.5 or higher. Strongest: M&quot; + mag(top[0].mag) + &quot;, &quot; + top[0].place + &quot;.&quot;;
-    var ul = $(&quot;liveList&quot;); ul.innerHTML = &quot;&quot;;
-    top.forEach(function (r) {
-      var li = document.createElement(&quot;li&quot;);
-      li.textContent = &quot;M&quot; + mag(r.mag) + &quot;, &quot; + r.place + &quot;, &quot; + fmtUTC(r.time) + (r.tsunami ? &quot; (tsunami flag set)&quot; : &quot;&quot;);
-      ul.appendChild(li);
-    });
-    $(&quot;liveSource&quot;).textContent = &quot;Live from the USGS, updated &quot; + fmtUTC(quakeUpdated) + &quot;.&quot; + (failed ? &quot; The latest refresh failed, so this may be out of date.&quot; : &quot;&quot;);
-  }
-  refreshPanel(); setInterval(refreshPanel, 120000);
-
-  /* ---------- tiny safe markdown ---------- */
-  function esc(s) { return s.replace(/&amp;/g, &quot;&amp;amp;&quot;).replace(/&lt;/g, &quot;&amp;lt;&quot;).replace(/&gt;/g, &quot;&amp;gt;&quot;); }
-  function inline(s) { return esc(s).replace(/\*\*(.+?)\*\*/g, &quot;&lt;strong&gt;$1&lt;/strong&gt;&quot;); }
-  function md(t) {
-    var out = &quot;&quot;, list = null;
-    function close() { if (list) { out += &quot;&lt;/&quot; + list + &quot;&gt;&quot;; list = null; } }
-    t.split(&quot;\n&quot;).forEach(function (raw) {
-      var l = raw.replace(/\s+$/, &quot;&quot;), m;
-      if ((m = l.match(/^\s*[-*\u2022]\s+(.*)/))) { if (list !== &quot;ul&quot;) { close(); out += &quot;&lt;ul&gt;&quot;; list = &quot;ul&quot;; } out += &quot;&lt;li&gt;&quot; + inline(m[1]) + &quot;&lt;/li&gt;&quot;; }
-      else if ((m = l.match(/^\s*\d+[.)]\s+(.*)/))) { if (list !== &quot;ol&quot;) { close(); out += &quot;&lt;ol&gt;&quot;; list = &quot;ol&quot;; } out += &quot;&lt;li&gt;&quot; + inline(m[1]) + &quot;&lt;/li&gt;&quot;; }
-      else if (!l.trim()) { close(); }
-      else { close(); out += &quot;&lt;p&gt;&quot; + inline(l.replace(/^#+\s*/, &quot;&quot;)) + &quot;&lt;/p&gt;&quot;; }
-    });
-    close(); return out;
-  }
-  function plain(t) {
-    return t.replace(/[*_#`&gt;]/g, &quot;&quot;).replace(/^\s*[-\u2022]\s+/gm, &quot;&quot;).replace(/\s*\n+\s*/g, &quot;. &quot;).replace(/\.\s*\./g, &quot;.&quot;).trim();
-  }
-
-  /* ---------- speaking (text to speech) ---------- */
-  var synth = window.speechSynthesis || null;
-  var LANG = navigator.language || &quot;en-US&quot;;
-  var voice = null, speakToken = 0;
-  function pickVoice() {
-    if (!synth) return;
-    var vs = synth.getVoices();
-    voice = vs.find(function (v) { return v.lang === LANG; }) ||
-            vs.find(function (v) { return v.lang &amp;&amp; v.lang.indexOf(LANG.split(&quot;-&quot;)[0]) === 0; }) || null;
-  }
-  if (synth) { pickVoice(); synth.onvoiceschanged = pickVoice; }
-  function setSpeaking(on) { stopVoiceBtn.hidden = !on; }
-  function speak(text) {
-    if (!synth) { setStatus(&quot;Reading aloud is not supported in this browser.&quot;, true); return; }
-    synth.cancel();
-    var chunks = (plain(text).match(/[^.!?]+[.!?]*/g) || []).map(function (s) { return s.trim(); }).filter(Boolean);
-    if (!chunks.length) return;
-    var token = ++speakToken;
-    chunks.forEach(function (c, i) {
-      var u = new SpeechSynthesisUtterance(c);
-      u.lang = LANG; if (voice) u.voice = voice;
-      if (i === 0) u.onstart = function () { if (token === speakToken) { setSpeaking(true); level.speaking = true; } };
-      var done = function () { if (token === speakToken &amp;&amp; i === chunks.length - 1) { setSpeaking(false); level.speaking = false; } };
-      u.onend = done; u.onerror = done;
-      synth.speak(u);
-    });
-  }
-  function stopSpeaking() { speakToken++; if (synth) synth.cancel(); setSpeaking(false); level.speaking = false; }
-  stopVoiceBtn.onclick = stopSpeaking;
-  window.addEventListener(&quot;pagehide&quot;, stopSpeaking);
-
-  /* ---------- dictation (speech to text) ---------- */
-  var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  var rec = null, listening = false, micFailed = false;
-  if (!SR) { micBtn.title = &quot;Dictation is not available in this browser&quot;; }
-  micBtn.onclick = function () {
-    if (!SR) { setStatus(&quot;Dictation is not available in this browser or app. &quot; + KEYBOARD_TIP, true); return; }
-    if (listening) { rec.stop(); return; }
-    stopSpeaking();
-    var base = input.value.trim() ? input.value.trim() + &quot; &quot; : &quot;&quot;;
-    micFailed = false;
-    rec = new SR();
-    rec.lang = LANG; rec.interimResults = true; rec.continuous = false;
-    rec.onstart = function () { listening = true; level.listening = true; micBtn.classList.add(&quot;rec&quot;); setStatus(&quot;Listening. Speak your question.&quot;); };
-    rec.onresult = function (e) {
-      var txt = &quot;&quot;; for (var i = 0; i &lt; e.results.length; i++) txt += e.results[i][0].transcript;
-      input.value = base + txt; grow();
-    };
-    rec.onerror = function (e) {
-      micFailed = true;
-      var m = {
-        &quot;not-allowed&quot;: &quot;Microphone access is blocked. Allow it in your browser settings, or type your question.&quot;,
-        &quot;service-not-allowed&quot;: &quot;Microphone access is blocked. Allow it in your browser settings, or type your question.&quot;,
-        &quot;no-speech&quot;: &quot;No speech heard. Tap the mic and try again.&quot;,
-        &quot;audio-capture&quot;: &quot;No microphone found. Connect one, or type your question.&quot;,
-        &quot;network&quot;: &quot;Dictation needs an internet connection. Try again, or type your question.&quot;
-      };
-      if (e.error !== &quot;aborted&quot;) setStatus((m[e.error] || &quot;Dictation stopped.&quot;) + &quot; [&quot; + e.error + &quot;] &quot; + KEYBOARD_TIP, true);
-    };
-    rec.onend = function () {
-      listening = false; level.listening = false; micBtn.classList.remove(&quot;rec&quot;);
-      if (!micFailed) {
-        if (input.value.trim() &amp;&amp; settings.auto) { setStatus(&quot;&quot;); send(); }
-        else if (input.value.trim()) setStatus(&quot;Press send when you are ready.&quot;);
-        else setStatus(&quot;Nothing was heard. If this keeps happening, the microphone may be blocked here. &quot; + KEYBOARD_TIP, true);
-      }
-    };
-    try { rec.start(); } catch (err) { setStatus(&quot;Could not start dictation. &quot; + KEYBOARD_TIP, true); }
-  };
-
-  /* ---------- conversation ---------- */
-  var turns = [], busy = false, ctl = null;
-
-  function scrollDown() { messagesEl.scrollTop = messagesEl.scrollHeight; }
-  function addUser(text) {
-    var d = document.createElement(&quot;div&quot;); d.className = &quot;msg user&quot;; d.textContent = text;
-    messagesEl.appendChild(d); scrollDown();
-  }
-  function addBot(html) {
-    var d = document.createElement(&quot;div&quot;); d.className = &quot;msg bot&quot;;
-    var body = document.createElement(&quot;div&quot;); body.innerHTML = html; d.appendChild(body);
-    messagesEl.appendChild(d); scrollDown();
-    return { el: d, body: body };
-  }
-  function addListen(bot, text) {
-    var b = document.createElement(&quot;button&quot;); b.type = &quot;button&quot;; b.className = &quot;listen&quot;;
-    b.innerHTML = ICON_LISTEN + &quot;&lt;span&gt;Listen&lt;/span&gt;&quot;;
-    b.onclick = function () { speak(text); };
-    bot.el.appendChild(b);
-  }
-
-  addBot(&quot;&lt;p&gt;Hi, I&#x27;m QuakeGuard. I&#x27;m here to answer earthquake related queries.&lt;/p&gt;&lt;p&gt;Ask about earthquakes happening right now anywhere in the world, earthquake safety, or how earthquakes work. Type a question, or tap the mic to dictate it.&lt;/p&gt;&quot;);
-  var chips = document.createElement(&quot;div&quot;); chips.className = &quot;chips&quot;;
-  [&quot;What is the strongest earthquake in the last 24 hours?&quot;, &quot;Any earthquakes near me?&quot;, &quot;What should I do during an earthquake?&quot;, &quot;What is the difference between magnitude and intensity?&quot;].forEach(function (q) {
-    var c = document.createElement(&quot;button&quot;); c.type = &quot;button&quot;; c.className = &quot;chip&quot;; c.textContent = q;
-    c.onclick = function () { send(q); };
-    chips.appendChild(c);
-  });
-  messagesEl.appendChild(chips);
-
-  function setBusy(on) {
-    busy = on; level.thinking = on;
-    sendIcon.innerHTML = on ? ICON_STOP : ICON_SEND;
-    sendBtn.setAttribute(&quot;aria-label&quot;, on ? &quot;Stop answer&quot; : &quot;Send question&quot;);
-    sendBtn.title = on ? &quot;Stop&quot; : &quot;Send&quot;;
-    micBtn.disabled = on;
-  }
-
-  var FETCH_ERR = &quot;I could not reach the USGS earthquake feed. Check your internet connection and try again. If this file is open inside a preview that blocks outside connections, open it directly in Chrome, Edge or Safari.&quot;;
-  async function send(preset) {
-    var text = (typeof preset === &quot;string&quot; ? preset : input.value).trim();
-    if (!text || busy) return;
-    stopSpeaking(); setStatus(&quot;&quot;);
-    if (chips.parentNode) chips.remove();
-    input.value = &quot;&quot;; grow();
-    addUser(text);
-    var bot = addBot(&#x27;&lt;span class=&quot;dots&quot; aria-label=&quot;QuakeGuard is thinking&quot;&gt;&lt;i&gt;&lt;/i&gt;&lt;i&gt;&lt;/i&gt;&lt;i&gt;&lt;/i&gt;&lt;/span&gt;&#x27;);
-    setBusy(true); ctl = new AbortController();
-    try {
-      var out = await QuakeEngine.answer(text, {
-        fetchFeed: function (key) { return getFeed(key, ctl.signal); },
-        getLocation: getLocation
-      });
-      bot.body.innerHTML = md(out.text);
-      if (out.meta) {
-        var meta = document.createElement(&quot;div&quot;); meta.className = &quot;meta&quot;; meta.textContent = out.meta;
-        bot.el.appendChild(meta);
-      }
-      addListen(bot, out.text);
-      level.burst = 1;
-      if (settings.speak) speak(out.text);
-    } catch (e) {
-      if (ctl &amp;&amp; ctl.signal.aborted) { bot.el.remove(); }
-      else { bot.el.classList.add(&quot;err&quot;); bot.body.innerHTML = &quot;&lt;p&gt;&quot; + esc(FETCH_ERR) + &quot;&lt;/p&gt;&quot;; }
-    } finally {
-      setBusy(false); ctl = null; scrollDown();
-    }
-  }
-  sendBtn.onclick = function () { if (busy &amp;&amp; ctl) ctl.abort(); else send(); };
-  input.addEventListener(&quot;keydown&quot;, function (e) {
-    if (e.key === &quot;Enter&quot; &amp;&amp; !e.shiftKey &amp;&amp; !e.isComposing) { e.preventDefault(); send(); }
-  });
-  function grow() { input.style.height = &quot;auto&quot;; input.style.height = Math.min(input.scrollHeight, 140) + &quot;px&quot;; }
-  input.addEventListener(&quot;input&quot;, grow);
-
-  /* ---------- live seismograph trace in the header ---------- */
-  var canvas = $(&quot;trace&quot;), ctx = canvas.getContext(&quot;2d&quot;);
-  var reduce = window.matchMedia(&quot;(prefers-reduced-motion: reduce)&quot;).matches;
-  var W = 0, H = 0, samples = [], amp = 0.08, colors = {};
-  function readColors() {
-    var cs = getComputedStyle(document.documentElement);
-    colors.line = cs.getPropertyValue(&quot;--trace&quot;).trim() || &quot;#d1342f&quot;;
-    colors.mid = cs.getPropertyValue(&quot;--line&quot;).trim() || &quot;#c2d0d4&quot;;
-  }
-  function resize() {
-    var r = canvas.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
-    W = Math.max(1, Math.floor(r.width)); H = Math.max(1, Math.floor(r.height));
-    canvas.width = W * dpr; canvas.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    samples = new Array(Math.ceil(W / 2) + 2).fill(0);
-    readColors(); draw();
-  }
-  var t = 0, spike = 0;
-  function nextSample() {
-    var target = 0.08;
-    if (level.thinking) target = 0.45;
-    if (level.speaking) target = 0.35;
-    if (level.listening) target = 0.7;
-    if (level.burst &gt; 0) { target = Math.max(target, level.burst); level.burst *= 0.96; if (level.burst &lt; 0.1) level.burst = 0; }
-    amp += (target - amp) * 0.06; t += 0.35;
-    if (spike &gt; 0.05 || spike &lt; -0.05) spike *= 0.82;
-    else if (Math.random() &lt; 0.02 + amp * 0.08) spike = (Math.random() &lt; 0.5 ? -1 : 1) * (0.4 + Math.random() * 0.6);
-    else spike = 0;
-    return (Math.sin(t * 1.7) * 0.25 + (Math.random() - 0.5) * 0.9 + spike * 1.6) * amp;
-  }
-  function draw() {
-    ctx.clearRect(0, 0, W, H);
-    ctx.strokeStyle = colors.mid; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(0, H / 2); ctx.lineTo(W, H / 2); ctx.stroke();
-    ctx.strokeStyle = colors.line; ctx.lineWidth = 1.6; ctx.lineJoin = &quot;round&quot;; ctx.beginPath();
-    for (var i = 0; i &lt; samples.length; i++) {
-      var x = i * 2, y = H / 2 + samples[i] * (H * 0.46);
-      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
-    }
-    ctx.stroke();
-  }
-  var last = 0;
-  function frame(ts) {
-    if (ts - last &gt; 30) { last = ts; samples.shift(); samples.push(nextSample()); draw(); }
-    requestAnimationFrame(frame);
-  }
-  window.addEventListener(&quot;resize&quot;, resize);
-  try { window.matchMedia(&quot;(prefers-color-scheme: dark)&quot;).addEventListener(&quot;change&quot;, function () { readColors(); draw(); }); } catch (e) {}
-  resize();
-  if (!reduce) requestAnimationFrame(frame);
-})();
-&lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-"></iframe>
+        <div class="qg-status" id="qgStatus" role="status"></div>
+        <div class="qg-composer">
+          <button class="qg-icon" id="qgMic" type="button" aria-label="Dictate your question" title="Dictate your question">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v4"/></svg>
+          </button>
+          <textarea id="qgInput" rows="1" placeholder="Ask about earthquakes" aria-label="Your question" autocomplete="off" enterkeyhint="send"></textarea>
+          <button class="qg-icon primary" id="qgSend" type="button" aria-label="Send question" title="Send">
+            <svg id="qgSendIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
+          </button>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1085,91 +442,297 @@ if (typeof module !== &quot;undefined&quot;) module.exports = QuakeEngine;
 </footer>
 
 <script>
-(function () {
+var QuakeEngine = (function () {
   "use strict";
-  var FEED = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_day.geojson";
-  function $(id) { return document.getElementById(id); }
+
+  var BASE = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/";
+  var FEEDS = {
+    hour:  { url: BASE + "all_hour.geojson",  floor: 0,   label: "all magnitudes, past hour" },
+    day:   { url: BASE + "2.5_day.geojson",   floor: 2.5, label: "M2.5 and higher, past 24 hours" },
+    week:  { url: BASE + "2.5_week.geojson",  floor: 2.5, label: "M2.5 and higher, past 7 days" },
+    month: { url: BASE + "4.5_month.geojson", floor: 4.5, label: "M4.5 and higher, past 30 days" }
+  };
+
+  /* ---------- feed parsing and small helpers ---------- */
+  function parseFeed(j) {
+    return {
+      generated: j.metadata && j.metadata.generated,
+      rows: j.features.map(function (f) {
+        var p = f.properties || {}, c = (f.geometry && f.geometry.coordinates) || [];
+        return { mag: p.mag, place: p.place || "unknown location", time: p.time, depth: c[2], lat: c[1], lon: c[0],
+                 tsunami: p.tsunami, alert: p.alert, felt: p.felt };
+      }).filter(function (r) { return r.mag != null && r.time != null; })
+    };
+  }
   function pad(n) { return n < 10 ? "0" + n : "" + n; }
-  function fmt(ms) {
+  function fmtUTC(ms) {
     var d = new Date(ms);
     return d.getUTCFullYear() + "-" + pad(d.getUTCMonth() + 1) + "-" + pad(d.getUTCDate()) + " " + pad(d.getUTCHours()) + ":" + pad(d.getUTCMinutes()) + " UTC";
   }
-  function ago(ms) {
-    var m = Math.max(0, Math.round((Date.now() - ms) / 60000));
+  function agoText(ms, now) {
+    var m = Math.max(0, Math.round((now - ms) / 60000));
     if (m < 60) return m + " min ago";
-    return Math.floor(m / 60) + " h " + (m % 60) + " min ago";
+    if (m < 2880) return Math.floor(m / 60) + " h " + (m % 60) + " min ago";
+    return Math.round(m / 1440) + " days ago";
+  }
+  function norm(s) {
+    return String(s).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9.+ ]/g, " ").replace(/\s+/g, " ").trim();
+  }
+  function prep(text) {
+    var t = norm(text);
+    return t.replace(/\bunited states( of america)?\b/g, "usa").replace(/\bu\.s\.a?\.?(?=\s|$)/g, "usa")
+            .replace(/\b(in|of|for|across|within|near) (the )?us\b/g, "$1 usa").replace(/\s+/g, " ").trim();
+  }
+  function km(a, b, c, d) {
+    var R = 6371, r = Math.PI / 180, dLat = (c - a) * r, dLon = (d - b) * r;
+    var h = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(a * r) * Math.cos(c * r) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    return 2 * R * Math.asin(Math.sqrt(h));
+  }
+  function title(s) { return s.replace(/\b[a-z]/g, function (c) { return c.toUpperCase(); }); }
+
+  /* ---------- places the engine can measure distance from ---------- */
+  var GAZ = {
+    "delhi": [28.61, 77.21], "mumbai": [19.08, 72.88], "chennai": [13.08, 80.27], "kolkata": [22.57, 88.36],
+    "bengaluru": [12.97, 77.59], "bangalore": [12.97, 77.59], "hyderabad": [17.39, 78.49], "kochi": [9.93, 76.27],
+    "cochin": [9.93, 76.27], "kerala": [10.5, 76.4, 250], "thiruvananthapuram": [8.52, 76.94], "trivandrum": [8.52, 76.94],
+    "kozhikode": [11.25, 75.78], "calicut": [11.25, 75.78],
+    "dubai": [25.2, 55.27], "abu dhabi": [24.45, 54.38], "doha": [25.29, 51.53], "riyadh": [24.71, 46.68], "muscat": [23.59, 58.41],
+    "karachi": [24.86, 67.0], "lahore": [31.55, 74.34], "islamabad": [33.68, 73.05], "kathmandu": [27.72, 85.32],
+    "dhaka": [23.81, 90.41], "colombo": [6.93, 79.86], "tehran": [35.69, 51.39], "istanbul": [41.01, 28.98], "ankara": [39.93, 32.86],
+    "cairo": [30.04, 31.24], "tokyo": [35.68, 139.69], "osaka": [34.69, 135.5], "seoul": [37.57, 126.98], "beijing": [39.9, 116.41],
+    "taipei": [25.03, 121.57], "manila": [14.6, 120.98], "jakarta": [-6.21, 106.85], "singapore": [1.35, 103.82], "bangkok": [13.76, 100.5],
+    "wellington": [-41.29, 174.78], "auckland": [-36.85, 174.76], "sydney": [-33.87, 151.21], "los angeles": [34.05, -118.24],
+    "san francisco": [37.77, -122.42], "seattle": [47.61, -122.33], "anchorage": [61.22, -149.9], "honolulu": [21.31, -157.86],
+    "mexico city": [19.43, -99.13], "lima": [-12.05, -77.04], "santiago": [-33.45, -70.67], "bogota": [4.71, -74.07],
+    "london": [51.51, -0.13], "rome": [41.9, 12.5], "athens": [37.98, 23.73], "lisbon": [38.72, -9.14], "new york": [40.71, -74.01]
+  };
+  var ALIAS = {
+    california: /\bcalifornia\b|\bca$/,
+    usa: /\b(alaska|hawaii|california|nevada|oregon|washington|idaho|montana|wyoming|utah|arizona|new mexico|texas|oklahoma|kansas|missouri|tennessee|kentucky|arkansas|colorado|south carolina|north carolina|virginia|new york)\b|\b(ak|ca|hi|nv|or|wa|id|mt|wy|ut|az|nm|tx|ok|ks|mo|tn|ky|ar|co|sc|nc|va|ny)$/,
+    uk: /\b(england|scotland|wales|united kingdom|northern ireland)\b/,
+    uae: /\bunited arab emirates\b|\bemirates\b/,
+    emirates: /\bunited arab emirates\b|\bemirates\b/,
+    turkey: /\b(turkey|turkiye)\b/
+  };
+  var STOP = ("the a an is are was were there any in on at of near around within from to for last past latest recent recently newest current " +
+    "currently now today tonight this that these those week weeks month months hour hours day days minute minutes ago earthquake earthquakes quake quakes " +
+    "tremor tremors seismic seismicity activity happening happened happen happens occur occurred occurring strongest biggest largest worst highest most " +
+    "powerful strong stronger bigger big large major serious dangerous significant notable small minor how many much number count total what whats which " +
+    "where when show tell me us about have has had been be did do does and or with magnitude mag above over greater than more at least tsunami tsunamis " +
+    "warning warnings alert alerts flag flags m plus higher just yesterday year location my nearby you please can could get give list i it no not only " +
+    "still ongoing aftershock aftershocks region country area areas places place anywhere worldwide world global globally some anything felt reported " +
+    "report reports seen see check status update updates info information data live real time realtime exceeding minimum equal or right here close " +
+    "shaking shake shocks shock ").split(" ");
+
+  function placeTokens(t) {
+    return t.split(" ").filter(function (w) {
+      return w && w.length > 1 && STOP.indexOf(w) < 0 && !/^[\d.+]+$/.test(w) && !/^m\d/.test(w);
+    });
+  }
+  function findCity(t) {
+    var best = null;
+    Object.keys(GAZ).forEach(function (name) {
+      if (new RegExp("\\b" + name + "\\b").test(t) && (!best || name.length > best.length)) best = name;
+    });
+    return best;
+  }
+  function textMatch(row, tokens) {
+    var p = norm(row.place);
+    return tokens.every(function (w) { return ALIAS[w] ? ALIAS[w].test(p) : new RegExp("\\b" + w + "\\b").test(p); });
   }
 
-  /* live figures from the USGS */
-  var activity = 0.3;
-  async function load() {
-    var c = new AbortController(), to = setTimeout(function () { c.abort(); }, 10000);
-    try {
-      var r = await fetch(FEED, { signal: c.signal });
-      if (!r.ok) throw new Error("http " + r.status);
-      var j = await r.json();
-      var f = j.features.filter(function (x) { return x.properties && x.properties.mag != null; });
-      if (!f.length) { $("statCount").textContent = "0"; $("statUpdated").textContent = "No earthquakes of M2.5 or higher in the last 24 hours."; return; }
-      var strongest = f.reduce(function (a, b) { return b.properties.mag > a.properties.mag ? b : a; });
-      var latest = f.reduce(function (a, b) { return b.properties.time > a.properties.time ? b : a; });
-      $("statCount").textContent = f.length;
-      $("statStrong").textContent = "M" + Number(strongest.properties.mag).toFixed(1);
-      $("capStrong").textContent = "strongest, " + (strongest.properties.place || "unknown location");
-      $("statLatest").textContent = "M" + Number(latest.properties.mag).toFixed(1);
-      $("capLatest").textContent = "latest, " + (latest.properties.place || "unknown location") + ", " + ago(latest.properties.time);
-      $("statUpdated").textContent = "Live from the USGS, updated " + fmt(Date.now()) + ".";
-      activity = Math.min(1, f.length / 120);
-    } catch (e) {
-      $("statUpdated").textContent = "Live figures are unavailable right now. Check your connection. The sections below still work.";
-    } finally { clearTimeout(to); }
-  }
-  load(); setInterval(load, 120000);
-
-  /* seismograph strip: busier when more earthquakes were recorded */
-  var canvas = $("trace"), ctx = canvas.getContext("2d");
-  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var W = 0, H = 0, samples = [], amp = 0.1, t = 0, spike = 0, colors = { line: "#d1342f", mid: "#c2d0d4" };
-  function readColors() {
-    var cs = getComputedStyle(document.documentElement);
-    colors.line = cs.getPropertyValue("--trace").trim() || colors.line;
-    colors.mid = cs.getPropertyValue("--line").trim() || colors.mid;
-  }
-  function draw() {
-    ctx.clearRect(0, 0, W, H);
-    ctx.strokeStyle = colors.mid; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(0, H / 2); ctx.lineTo(W, H / 2); ctx.stroke();
-    ctx.strokeStyle = colors.line; ctx.lineWidth = 1.8; ctx.lineJoin = "round"; ctx.beginPath();
-    for (var i = 0; i < samples.length; i++) {
-      var x = i * 2, y = H / 2 + samples[i] * (H * 0.46);
-      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+  /* ---------- reading the question ---------- */
+  function parseWindow(t) {
+    var m = t.match(/\blast (\d+) (hours?|days?)\b/);
+    if (m) {
+      var n = parseInt(m[1], 10), hrs = /^day/.test(m[2]) ? n * 24 : n;
+      var key = hrs <= 1 ? "hour" : hrs <= 24 ? "day" : hrs <= 168 ? "week" : "month";
+      return { key: key, cutoffMs: hrs * 3600000, span: "in the last " + n + " " + m[2] };
     }
-    ctx.stroke();
+    if (/\b(hour|60 minutes|right now|just now|minutes? ago|this minute)\b/.test(t)) return { key: "hour", span: "in the last hour" };
+    if (/\b(month|30 days|thirty days)\b/.test(t)) return { key: "month", span: "in the last 30 days" };
+    if (/\b(week|7 days|seven days)\b/.test(t)) return { key: "week", span: "in the last 7 days" };
+    return { key: "day", span: "in the last 24 hours" };
   }
-  function resize() {
-    var r = canvas.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
-    W = Math.max(1, Math.floor(r.width)); H = Math.max(1, Math.floor(r.height));
-    canvas.width = W * dpr; canvas.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    samples = new Array(Math.ceil(W / 2) + 2).fill(0);
-    if (reduce) for (var i = 0; i < samples.length; i++) samples[i] = Math.sin(i * 0.35) * 0.12 + (Math.sin(i * 1.9) * 0.05);
-    readColors(); draw();
+  function parseMinMag(t) {
+    var m = t.match(/\b(?:above|over|greater than|more than|at least|stronger than|bigger than|higher than|exceeding|minimum)\s*(?:m|mag(?:nitude)?\s*)?(\d(?:\.\d)?)\b/) ||
+            t.match(/\bm\s?(\d(?:\.\d)?)\b/) ||
+            t.match(/\bmag(?:nitude)?\s*(\d(?:\.\d)?)\b/) ||
+            t.match(/\b(\d(?:\.\d)?)\s*(?:\+|plus\b|or (?:more|higher|above|greater|stronger)|and (?:above|higher|up|over))/);
+    return m ? parseFloat(m[1]) : 0;
   }
-  function next() {
-    var target = 0.1 + activity * 0.3;
-    amp += (target - amp) * 0.05; t += 0.35;
-    if (Math.abs(spike) > 0.05) spike *= 0.82;
-    else if (Math.random() < 0.01 + activity * 0.05) spike = (Math.random() < 0.5 ? -1 : 1) * (0.4 + Math.random() * 0.6);
-    else spike = 0;
-    return (Math.sin(t * 1.7) * 0.25 + (Math.random() - 0.5) * 0.9 + spike * 1.8) * amp;
+  function detectKind(t) {
+    if (/\btsunami/.test(t)) return "tsunami";
+    if (/\b(how many|number of|count|total)\b/.test(t)) return "count";
+    if (/\b(strongest|biggest|largest|worst|highest|most powerful|greatest)\b/.test(t)) return "strongest";
+    return "latest";
   }
-  var last = 0;
-  function frame(ts) {
-    if (ts - last > 30) { last = ts; samples.shift(); samples.push(next()); draw(); }
-    requestAnimationFrame(frame);
+  function isLive(t) {
+    var cue = /\b(latest|recent|recently|newest|current|currently|now|today|tonight|yesterday|this week|this month|past (hour|day|week|month|24)|last (hour|day|week|month|24|\d+)|just happened|right now|any (earthquakes?|quakes?|tremors?|seismic)|were there|was there|is there|are there|strongest|biggest|largest|highest|how many|count|number of|happening|activity|near me|nearby|around me|near here)\b/;
+    var topic = /\b(earthquakes?|quakes?|tremors?|seismic|shaking|magnitude|tsunamis?|aftershocks?)\b/;
+    if (cue.test(t) && (topic.test(t) || /\b(near me|nearby|around me)\b/.test(t))) return true;
+    var asksHow = /^(why|how (do|does|can|to)|what (causes|should|to|is an?|is the (difference|meaning))|can (we|you|i)|should)\b/.test(t);
+    var inPlace = /\b(near|around|close to|in|at)\s+(?!an?\b|the\b|case\b|\d|home\b|school\b|work\b|office\b|night\b|bed\b|car\b|building|apartment|house\b|general\b|public\b|class|kitchen\b|bathroom\b|elevator\b|mall\b|train\b|bus\b|time\b|general\b|advance\b|future\b|india\b.*(zone|building)|my\b)[a-z]/.test(t);
+    return topic.test(t) && inPlace && !asksHow;
   }
-  window.addEventListener("resize", resize);
-  try { window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function () { readColors(); draw(); }); } catch (e) {}
-  resize();
-  if (!reduce) requestAnimationFrame(frame);
+
+  /* ---------- answering from live data ---------- */
+  function line(r, now, extra) {
+    return "M" + Number(r.mag).toFixed(1) + ", " + r.place + ", " + fmtUTC(r.time) + " (" + agoText(r.time, now) + ")" +
+      (r.depth != null && extra ? ", depth " + Math.max(0, Math.round(r.depth)) + " km" : "") +
+      (r.tsunami ? ", tsunami flag set" : "");
+  }
+  var BINS = [[-9, 2.5, "under M2.5"], [2.5, 4, "M2.5 to 3.9"], [4, 5, "M4.0 to 4.9"], [5, 6, "M5.0 to 5.9"], [6, 7, "M6.0 to 6.9"], [7, 99, "M7.0 and higher"]];
+
+  async function live(rawText, t, helpers) {
+    var now = helpers.now ? helpers.now() : Date.now();
+    var kind = detectKind(t), win = parseWindow(t), minMag = parseMinMag(t);
+    var wantsNear = /\b(near me|nearby|around me|close to me|near here|around here|my location|my area|where i am)\b/.test(t);
+    var feed = FEEDS[win.key];
+
+    var data = await helpers.fetchFeed(win.key);
+    var rows = data.rows.slice();
+    if (win.cutoffMs) rows = rows.filter(function (r) { return r.time >= now - win.cutoffMs; });
+
+    var scope = "worldwide", notes = [];
+    if (wantsNear) {
+      var loc;
+      try { loc = await helpers.getLocation(); }
+      catch (e) {
+        return { text: "I could not get your location. Allow location access in your browser, or name a city or country instead, for example \"earthquakes near Tokyo\"." };
+      }
+      rows = rows.filter(function (r) { return r.lat != null && km(loc.lat, loc.lon, r.lat, r.lon) <= 500; });
+      scope = "within 500 km of your location";
+    } else {
+      var tokens = placeTokens(t), city = findCity(t);
+      if (city) {
+        var g = GAZ[city], radius = g[2] || 300;
+        rows = rows.filter(function (r) { return r.lat != null && km(g[0], g[1], r.lat, r.lon) <= radius; });
+        scope = "within " + radius + " km of " + title(city);
+      } else if (tokens.length) {
+        rows = rows.filter(function (r) { return textMatch(r, tokens); });
+        scope = "in or near " + title(tokens.join(" "));
+      }
+    }
+    if (minMag > 0) { rows = rows.filter(function (r) { return r.mag >= minMag; }); scope += (scope === "worldwide" ? ", " : ", ") + "M" + minMag + " and higher"; }
+    if (minMag > 0 && minMag < feed.floor) notes.push("This feed only includes M" + feed.floor + " and higher.");
+
+    var meta = "Live USGS data, fetched " + fmtUTC(data.fetchedAt || now) + ". Feed: " + feed.label + ".";
+    var span = win.span;
+    var head, body = [];
+
+    if (kind === "tsunami") {
+      var ts = rows.filter(function (r) { return r.tsunami; }).sort(function (a, b) { return b.time - a.time; });
+      head = ts.length
+        ? ts.length + " earthquake" + (ts.length > 1 ? "s" : "") + " " + span + " (" + scope + ") carried the USGS tsunami flag:"
+        : "No earthquakes " + span + " (" + scope + ") carried the USGS tsunami flag.";
+      ts.slice(0, 5).forEach(function (r) { body.push("- " + line(r, now, true)); });
+      body.push("");
+      body.push("The flag means the earthquake was large and under or near an ocean, so tsunami messages may exist. It does not confirm a tsunami. For official warnings, check your national tsunami warning centre, for example INCOIS in India or tsunami.gov in the USA.");
+    } else if (!rows.length) {
+      head = "No earthquakes " + span + " (" + scope + ") were listed in this feed.";
+      body.push("Smaller earthquakes than the feed covers are not included, and the USGS may list quakes in some regions late.");
+      if (scope !== "worldwide" && !/within|your location/.test(scope)) body.push("If that is not a place name I recognise, try a country, a city or a region, for example \"earthquakes in Japan\".");
+      body.push("For local reports, check your national seismology agency.");
+    } else if (kind === "count") {
+      head = rows.length + " earthquake" + (rows.length > 1 ? "s" : "") + " " + span + " (" + scope + "):";
+      BINS.forEach(function (b) {
+        var n = rows.filter(function (r) { return r.mag >= b[0] && r.mag < b[1]; }).length;
+        if (n) body.push("- " + b[2] + ": " + n);
+      });
+      var top = rows.slice().sort(function (a, b) { return b.mag - a.mag || b.time - a.time; })[0];
+      body.push("");
+      body.push("Strongest: " + line(top, now, true) + ".");
+    } else if (kind === "strongest") {
+      var sorted = rows.slice().sort(function (a, b) { return b.mag - a.mag || b.time - a.time; });
+      head = "The strongest earthquake " + span + " (" + scope + ") was " + line(sorted[0], now, true) + ".";
+      if (sorted[0].alert) body.push("USGS PAGER alert level: " + sorted[0].alert + ".");
+      if (sorted.length > 1) {
+        body.push("Next strongest:");
+        sorted.slice(1, 4).forEach(function (r) { body.push("- " + line(r, now, false)); });
+      }
+    } else {
+      var latest = rows.slice().sort(function (a, b) { return b.time - a.time; });
+      head = "Latest earthquakes " + span + " (" + scope + "), newest first:";
+      latest.slice(0, 5).forEach(function (r) { body.push("- " + line(r, now, false)); });
+      if (latest.length > 5) body.push("There were " + latest.length + " in total.");
+    }
+    notes.forEach(function (n) { body.push(n); });
+    return { text: [head].concat(body).join("\n"), meta: meta };
+  }
+
+  /* ---------- built-in knowledge ---------- */
+  var EARLY = [
+    { re: /\b(who are you|what are you|your name|are you (an? )?(ai|bot|robot|human|real|person)|about you|about yourself|what can you do|what do you do|the ai|this ai|the bot|this bot|the assistant|this assistant|the chatbot|this chatbot|what (model|ai|llm|technology)|which (model|ai|llm)|who (made|built|created|developed|trained|owns) you|chatgpt|gpt|claude|gemini|openai|anthropic|how do you work|powered by)\b/,
+      a: "I am QuakeGuard, here to answer earthquake-related queries. I'm an automated assistant, not a person. Ask me about recent earthquakes anywhere in the world, or about earthquake safety and science." },
+    { re: /^(hi|hello|hey|hii|namaste|salam|hola|good (morning|afternoon|evening))\b/, max: 28,
+      a: "Hello, I'm QuakeGuard. Ask me about recent earthquake activity, earthquake safety, or how earthquakes work." },
+    { re: /\b(thanks|thank you|thx|cheers)\b/, max: 40, a: "You're welcome. Ask me anything else about earthquakes." },
+    { re: /(biggest|largest|strongest|worst|most powerful|deadliest).*(ever|in history|on record|of all time|recorded)|\b(ever recorded|all time)\b/,
+      a: "The strongest earthquake ever recorded was the 1960 Valdivia (Great Chilean) earthquake, magnitude 9.5.\n- 1964 Alaska: M9.2\n- 2004 Sumatra and the Indian Ocean: about M9.1 to 9.3, which caused a tsunami that killed around 230,000 people\n- 2011 Tohoku, Japan: M9.1\nThe deadliest on record is generally cited as the 1556 Shaanxi earthquake in China." },
+    { re: /how many (earthquakes|quakes).*(year|annual|every|each|per|day)|(per|each|every) year|a year\b/,
+      a: "Millions of earthquakes happen every year, but most are too small to feel or even detect. The USGS locates around 20,000 a year. Roughly, each year there is about 1 earthquake of magnitude 8 or more, about 15 between M7 and 7.9, about 130 between M6 and 6.9, and over 1,000 between M5 and 5.9." },
+    { re: /\b(doorway|door frame|triangle of life)\b/,
+      a: "Standing in a doorway is not the safest choice in modern buildings. Doorways are not stronger than the rest of the structure, and falling objects can still hit you.\nDrop, Cover, and Hold On is the recommended response: get low, take cover under a sturdy table or desk, and hold on until the shaking stops." }
+  ];
+  var KB = [
+    { re: /\b(difference|vs|versus).*(magnitude|intensity)|(magnitude|intensity).*(difference|vs|versus)|richter|mercalli|moment magnitude|logarithmic|how (is|are).*(earthquakes? )?(measured|rated)/,
+      a: "Magnitude is the energy released at the earthquake's source. Each quake has one magnitude. Today it is reported as moment magnitude (Mw), which replaced the older Richter scale. The scale is logarithmic: each whole step is about 10 times larger ground motion and roughly 32 times more energy.\nIntensity is how strong the shaking and damage were at a particular place. It is measured on the Modified Mercalli scale (I to XII) and changes with distance, depth and local ground conditions." },
+    { re: /(what|how).*(does|do|is|are|would).*(m ?\d|magnitude \d|magnitude mean|strong)|magnitude levels|how strong is/,
+      a: "USGS classes by magnitude:\n- Under 3: micro, usually not felt\n- 3 to 3.9: minor, often felt, rarely causes damage\n- 4 to 4.9: light, noticeable shaking, little damage\n- 5 to 5.9: moderate, can damage poorly built buildings\n- 6 to 6.9: strong, can be destructive within about 100 km\n- 7 to 7.9: major, serious damage over a large area\n- 8 and higher: great, can destroy communities near the centre\nDepth and distance also matter a lot." },
+    { re: /emergency kit|go bag|survival kit|supplies|what (should|to).*(keep|pack|have).*(earthquake|kit)|kit.*earthquake/,
+      a: "An earthquake emergency kit should cover at least 3 days, ideally more:\n- Water: about 4 litres per person per day\n- Non-perishable food and a can opener\n- First aid kit and regular medicines\n- Torch with spare batteries, and a whistle\n- Battery or hand-crank radio and a power bank\n- Sturdy shoes, warm clothes, a blanket\n- Dust masks, hygiene items, a basic tool set\n- Copies of important documents and some cash\n- Items for children, older family members and pets\nKeep it where you can reach it quickly." },
+    { re: /(what|how).*(do|should|to).*(during|while|when).*(earthquake|shaking|quake)|during (an |the )?(earthquake|shaking)|when the ground (shakes|is shaking)|earthquake happens|drop,? cover|if (there is|there s) an earthquake|(what|how) (to|should i|do i|can i) (do|act|react|respond|stay safe) (in|if|when|during) (an |the )?(earthquake|quake)/,
+      a: "Drop, Cover, and Hold On:\n1. Drop to your hands and knees.\n2. Cover your head and neck under a sturdy table or desk, or against an inside wall away from windows.\n3. Hold On until the shaking stops.\nAlso:\n- Stay inside. Do not run out or use elevators.\n- In bed, stay there and protect your head with a pillow.\n- Outdoors, move away from buildings, trees and power lines, then drop.\n- In a car, pull over in a clear area and stay inside with your seatbelt on.\n- Near the coast, if shaking is strong or long, move to high ground right away." },
+    { re: /after (an |the )?(earthquake|shaking|quake)|(what|how).*(do|should).*(after)|once the shaking (stops|ends)/,
+      a: "After the shaking stops:\n- Expect aftershocks. Drop, Cover, and Hold On again if they come.\n- Check yourself and others for injuries. Call your emergency number for serious ones.\n- Put on sturdy shoes and watch for broken glass.\n- If you smell gas or hear hissing, open windows, shut off the gas if you can, and leave. Do not use matches or switches.\n- Stay out of damaged buildings.\n- Use text messages instead of calls to keep phone lines free.\n- If you are near the coast and the shaking was strong, move to high ground at once.\n- Follow official updates." },
+    { re: /prepar|before (an |the )?earthquake|be ready|get ready|family plan|secure (furniture|heavy)|retrofit|how can i (stay safe|protect)|earthquake safety|stay safe|safe (place|spot)|what should i do$/,
+      a: "To prepare before an earthquake:\n- Make a family plan: a meeting place and an out-of-area contact.\n- Prepare an emergency kit for at least 3 days.\n- Fix tall furniture, shelves, water heaters and heavy items to the wall. Keep heavy objects on low shelves.\n- Learn how to shut off gas, water and electricity.\n- Know your safe spots: under sturdy tables, away from windows and heavy objects.\n- Practise Drop, Cover, and Hold On.\n- Check if your building is built or retrofitted for earthquakes." },
+    { re: /what (is|are) (an? )?(earthquake|quake)s?\b|define earthquake|meaning of earthquake|earthquakes? (definition|means?)/,
+      a: "An earthquake is the shaking of the ground caused by a sudden release of energy in the Earth's crust. Rock that has been slowly stressed along a fault suddenly slips, and the energy travels outward as seismic waves." },
+    { re: /\b(cause|causes|caused|why do earthquakes|how do earthquakes|tectonic|plate|plates|fault|faults)\b/,
+      a: "Earth's outer shell is broken into tectonic plates that move slowly, a few centimetres a year. At faults, plates can lock together while stress builds. When the stress becomes greater than the friction holding the rock, it slips suddenly and releases energy as seismic waves, which we feel as an earthquake.\nMost earthquakes happen along plate boundaries. A small number are caused by volcanic activity or by human activity such as mining, reservoirs or deep fluid injection." },
+    { re: /aftershock|foreshock|mainshock|main shock/,
+      a: "An aftershock is a smaller earthquake that follows a larger one (the mainshock) in the same area as the crust adjusts. Aftershocks become less frequent over time but can continue for days, months or even years after a big earthquake, and they can still damage weakened buildings.\nA foreshock is a smaller quake that comes before a larger one. It can only be recognised as a foreshock afterwards." },
+    { re: /early warning|shakealert|sasmex/,
+      a: "Earthquake early warning systems detect the first, faster waves near the epicentre and send alerts before the strongest shaking arrives. They give seconds to tens of seconds of notice, enough to Drop, Cover, and Hold On, slow trains or open fire station doors. Systems operate in places such as Japan, Mexico and the US West Coast." },
+    { re: /predict|forecast|can (scientists|we) know|know when|before it happens/,
+      a: "No. Scientists cannot predict the exact time, place and size of an earthquake. They can estimate long-term probabilities for a region, forecast aftershocks after a big quake, and some countries run early warning systems that alert you seconds after a quake starts. Be wary of anyone claiming to predict a specific earthquake." },
+    { re: /tsunami/,
+      a: "A tsunami is a series of long ocean waves, most often triggered by a large earthquake under or near the sea floor.\nNatural warning signs near the coast: strong or long shaking, a sudden rise or fall of the sea, or a loud roar from the ocean.\nWhat to do: move to high ground or inland immediately and do not wait for an official warning. Stay away until officials say it is safe, because waves can keep arriving for hours.\nFor official alerts, follow your national tsunami warning centre." },
+    { re: /seismograph|seismometer|seismogram|how (do|are).*(locate|detect|find)|epicent|p wave|s wave|seismic wave/,
+      a: "A seismograph has a heavy mass that stays almost still while the ground moves under it, and it records that motion as a seismogram. Earthquakes send out faster P waves and slower S waves. By comparing when they reach at least three stations, scientists can work out where the earthquake happened (the epicentre) and how deep it was." },
+    { re: /\b(depth|deep|shallow|focus|hypocent)/,
+      a: "Earthquake depth is how far below the surface the rupture starts. Shallow earthquakes are 0 to 70 km deep, intermediate 70 to 300 km, and deep 300 to 700 km. Shallow earthquakes usually cause the most damage for their magnitude because they are closer to the surface." },
+    { re: /ring of fire|pacific ring|where do (most )?earthquakes|earthquake zones?|earthquake belt/,
+      a: "About 90 percent of the world's earthquakes happen along the Ring of Fire, a horseshoe-shaped belt around the Pacific Ocean where several plates meet. Other active belts run through the Mediterranean and Himalaya (the Alpide belt) and along mid-ocean ridges." },
+    { re: /india.*(seismic|zone|earthquake)|(seismic|zone).*india|national center for seismology|ncs\b|incois/,
+      a: "India's building code divides the country into seismic zones II to V, where V is the highest hazard. Zone V includes much of the Northeast, parts of the Himalayan region and Kutch. India's National Center for Seismology (seismo.gov.in) reports earthquakes in and around India, and INCOIS issues tsunami advisories for the Indian Ocean." }
+  ];
+
+  function fallback(t) {
+    var onTopic = /\b(earthquakes?|quakes?|seismic|tremors?|tsunamis?|fault|magnitude|aftershocks?|tectonic|richter|epicent\w*)\b/.test(t);
+    if (onTopic) {
+      return { text: "I don't have an answer for that yet. Try asking about recent earthquakes (for example \"strongest earthquake today\" or \"earthquakes near Tokyo\"), or about safety, preparation, causes, magnitude or tsunamis." };
+    }
+    return { text: "I only answer earthquake related queries. You can ask about recent earthquakes anywhere in the world, what to do during one, how to prepare, or how earthquakes work." };
+  }
+
+  async function answer(text, helpers) {
+    var t = prep(text);
+    if (!t) return { text: "Ask me about recent earthquakes or earthquake safety." };
+    for (var i = 0; i < EARLY.length; i++) {
+      if (EARLY[i].re.test(t) && (!EARLY[i].max || t.length <= EARLY[i].max)) return { text: EARLY[i].a };
+    }
+    if (isLive(t)) return live(text, t, helpers);
+    for (var j = 0; j < KB.length; j++) if (KB[j].re.test(t)) return { text: KB[j].a };
+    return fallback(t);
+  }
+
+  return { answer: answer, parseFeed: parseFeed, fmtUTC: fmtUTC, agoText: agoText, FEEDS: FEEDS, _t: { prep: prep, parseMinMag: parseMinMag, parseWindow: parseWindow, isLive: isLive, placeTokens: placeTokens } };
 })();
+if (typeof module !== "undefined") module.exports = QuakeEngine;
+
 </script>
 <script>
 /* ---------- seismometer: search a city or country, see its latest earthquake status ---------- */
@@ -1183,14 +746,12 @@ if (typeof module !== &quot;undefined&quot;) module.exports = QuakeEngine;
   var SUGGEST = ["Japan", "Nepal", "Chile", "Indonesia", "Tokyo", "California"];
   function $(id) { return document.getElementById(id); }
 
-  var state = { days: 30, sort: "latest", places: [], feeds: {}, expanded: {}, loadError: false };
+  var state = { days: 30, sort: "strongest", places: [], feeds: {}, loadError: false };
 
   /* ----- saved places live in this browser only ----- */
   try {
     var saved = JSON.parse(localStorage.getItem(STORE) || "{}");
     if (Array.isArray(saved.places)) state.places = saved.places.filter(function (p) { return p && p.key && p.name && p.kind; });
-    if (saved.days === 7 || saved.days === 30) state.days = saved.days;
-    if (saved.sort === "latest" || saved.sort === "strongest") state.sort = saved.sort;
   } catch (e) {}
   function save() {
     try { localStorage.setItem(STORE, JSON.stringify({ places: state.places, days: state.days, sort: state.sort })); } catch (e) {}
@@ -1321,6 +882,8 @@ if (typeof module !== &quot;undefined&quot;) module.exports = QuakeEngine;
   function byTime(a, b) { return b.time - a.time; }
   function byMag(a, b) { return b.mag - a.mag || b.time - a.time; }
 
+  function rowColor(m) { return m >= 6 ? "#f87171" : m >= 4 ? "#fb923c" : "#facc15"; }
+
   function card(p, feed) {
     var evs = eventsFor(p, feed.rows);
     var strongest = evs.slice().sort(byMag)[0], latest = evs.slice().sort(byTime)[0];
@@ -1358,33 +921,27 @@ if (typeof module !== &quot;undefined&quot;) module.exports = QuakeEngine;
 
     if (strongest) {
       body.appendChild(el("p", "tp-line", "Strongest recent quake: M" + strongest.mag.toFixed(1)));
-      body.appendChild(el("p", "tp-line", "Latest: M" + latest.mag.toFixed(1) + ", " + latest.place + ", " + rel(latest.time)));
+      body.appendChild(el("p", "tp-line sub", "Latest quake: M" + latest.mag.toFixed(1) + ", " + rel(latest.time)));
     } else {
-      body.appendChild(el("p", "tp-line", "No earthquakes of M2.5 or higher in the last " + state.days + " days."));
+      body.appendChild(el("p", "tp-line", "No earthquakes of M2.5 or higher in the last 30 days"));
     }
-    if (p.scope) body.appendChild(el("p", "tp-line sub", "Showing earthquakes within " + p.radius + " km of " + p.scope + "."));
-    body.appendChild(el("p", "tp-line sub", "Checked " + new Date(feed.at).toLocaleString()));
+    if (p.scope) body.appendChild(el("p", "tp-line sub", "Within " + p.radius + " km of " + p.scope));
+    body.appendChild(el("p", "tp-line sub", "Checked " + new Date(feed.at).toLocaleString("en-US")));
 
     if (evs.length) {
-      var open = !!state.expanded[p.key], limit = open ? 25 : 5;
       var ul = el("ul", "tp-events");
-      evs.slice().sort(state.sort === "latest" ? byTime : byMag).slice(0, limit).forEach(function (r) {
+      evs.slice().sort(byMag).slice(0, 4).forEach(function (r) {
         var li = el("li", "tp-ev");
-        var m = el("b", null, "M" + r.mag.toFixed(1)); m.style.color = tier(r.mag).color;
+        var m = el("b", null, "M" + r.mag.toFixed(1)); m.style.color = rowColor(r.mag);
         li.appendChild(m);
         if (r.url) { var l = el("a", null, r.place); l.href = r.url; l.target = "_blank"; l.rel = "noopener"; li.appendChild(l); }
         else li.appendChild(el("span", null, r.place));
-        var tm = el("time", null, rel(r.time)); tm.title = new Date(r.time).toISOString().replace("T", " ").slice(0, 16) + " UTC";
+        var tm = el("time", null, new Date(r.time).toLocaleDateString("en-US"));
+        tm.title = new Date(r.time).toISOString().replace("T", " ").slice(0, 16) + " UTC";
         li.appendChild(tm);
         ul.appendChild(li);
       });
       body.appendChild(ul);
-      if (evs.length > 5) {
-        var more = el("button", "tp-more", open ? "Show fewer" : "Show " + Math.min(evs.length, 25) + (evs.length > 25 ? " of " + evs.length : " events"));
-        more.type = "button";
-        more.addEventListener("click", function () { state.expanded[p.key] = !open; render(); });
-        body.appendChild(more);
-      }
     }
     a.appendChild(body);
 
@@ -1398,27 +955,11 @@ if (typeof module !== &quot;undefined&quot;) module.exports = QuakeEngine;
     return a;
   }
 
-  function paintTools() {
-    Array.prototype.forEach.call(document.querySelectorAll("#tpTools [data-days]"), function (b) { b.setAttribute("aria-pressed", String(Number(b.dataset.days) === state.days)); });
-    Array.prototype.forEach.call(document.querySelectorAll("#tpTools [data-sort]"), function (b) { b.setAttribute("aria-pressed", String(b.dataset.sort === state.sort)); });
-  }
-
   function render() {
     var list = $("tpList");
     list.textContent = "";
-    $("tpTools").hidden = !state.places.length;
-    paintTools();
     if (!state.places.length) {
-      var empty = el("div", "tp-empty");
-      empty.appendChild(el("p", null, "Nothing here yet. Add a place above, or try one of these:"));
-      var chips = el("div", "tp-chips");
-      SUGGEST.forEach(function (s) {
-        var c = el("button", "tp-chip", s); c.type = "button";
-        c.addEventListener("click", function () { $("tpInput").value = s; $("tpForm").requestSubmit(); });
-        chips.appendChild(c);
-      });
-      empty.appendChild(chips);
-      list.appendChild(empty);
+      list.appendChild(el("p", "tp-empty", "No places yet. Add a city or country above to start monitoring."));
       return;
     }
     var feed = state.feeds[state.days];
@@ -1459,22 +1000,454 @@ if (typeof module !== &quot;undefined&quot;) module.exports = QuakeEngine;
     } finally { add.disabled = false; render(); }
   });
 
-  Array.prototype.forEach.call(document.querySelectorAll("#tpTools [data-days]"), function (b) {
-    b.addEventListener("click", async function () {
-      state.days = Number(b.dataset.days); save(); paintTools();
-      if (!state.feeds[state.days]) { render(); try { await loadFeed(state.days); } catch (e) { state.loadError = true; msg("Could not load that time window. Try again.", true); } }
-      render();
-    });
-  });
-  Array.prototype.forEach.call(document.querySelectorAll("#tpTools [data-sort]"), function (b) {
-    b.addEventListener("click", function () { state.sort = b.dataset.sort; save(); render(); });
-  });
-
   render();
   loadFeed(state.days).then(render, function () { state.loadError = true; render(); });
   setInterval(function () {
     if (state.places.length && !document.hidden) loadFeed(state.days, true).then(render, function () {});
   }, 300000);
+})();
+</script>
+<script>
+/* ============ QUAKEGUARD: the chat assistant ============ */
+(function () {
+  "use strict";
+  var CFG = window.WAVEALERT_CONFIG || {};
+  var MODEL = CFG.model || "claude-sonnet-5-5";
+  var SIG_URL = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_week.geojson";
+  var KEY_STORE = "wavealert.quakeguard.key", PREF_STORE = "wavealert.quakeguard.prefs";
+  function $(id) { return document.getElementById(id); }
+
+  /* ---------- what QuakeGuard is told (the "system prompt") ---------- */
+  var RULES = [
+    "You are QuakeGuard, a friendly assistant on a website called WaveAlert that answers earthquake-related questions only.",
+    "Topics you cover: current and recent earthquake activity, causes and plate tectonics, faults, seismology and seismographs, magnitude and intensity scales, aftershocks, foreshocks, tsunamis caused by earthquakes, preparedness kits and plans, what to do before, during and after shaking, home and building safety, famous historical earthquakes, and how to read earthquake reports.",
+    "IDENTITY: Your name is QuakeGuard. If the user asks anything about you or about the AI (who or what you are, your name, who built you, which model or company is behind you, how you work, whether you are ChatGPT or another assistant), answer with: \"I am QuakeGuard, here to answer earthquake-related queries.\" You may add one short sentence inviting an earthquake question. Never claim to be human; if someone sincerely asks whether you are a person, say you are an AI assistant. Do not name any underlying model or company.",
+    "SCOPE: If a question is not about earthquakes, say politely in one or two sentences that you only answer earthquake-related queries, and invite an earthquake question.",
+    "STYLE: Answer the question that was asked, directly and in plain language. Keep replies short, usually under 150 words. Use short numbered steps or short bullet points for safety instructions. Your reply may be read aloud, so avoid tables, emoji, links and unusual symbols. Reply in the same language the user writes in.",
+    "ACCURACY: You cannot predict earthquakes. If you are not sure, say so rather than guessing. For official, up-to-the-minute information, point to the USGS or the user's national seismology or disaster agency (for example the National Center for Seismology in India).",
+    "LIVE DATA: After these instructions you receive EARTHQUAKE DATA from the USGS, fetched when the user sent the message. It lists every earthquake of magnitude 2.5 or higher worldwide in the last 24 hours, plus the USGS list of significant earthquakes of the last 7 days. Use only this data for questions about current or recent earthquakes. A COMPUTED RESULT section may follow; the page calculated it from the full USGS feed for this exact question, so prefer it over the lists and keep its numbers. Give times in UTC and add how long ago. If the data says it is unavailable, say so plainly. If nothing matches a place the user asks about, say no earthquake of M2.5 or higher was listed there for that period, that smaller ones are not covered, and suggest the local agency. Never invent events. Magnitudes are preliminary and can change. A tsunami flag means the earthquake was large and under or near an ocean, so tsunami messages may exist; it does not confirm that a tsunami happened, so point to official tsunami warning centers. Do not list more than 5 events unless asked.",
+    "SAFETY: If the user says the ground is shaking now or describes an emergency, start with Drop, Cover, and Hold On, and tell them to call their local emergency number if anyone is hurt or in danger."
+  ].join("\n");
+
+  var messagesEl = $("qgMessages"), input = $("qgInput"), sendBtn = $("qgSend"), sendIcon = $("qgSendIcon"),
+      micBtn = $("qgMic"), statusEl = $("qgStatus"), speakToggle = $("qgSpeak"), autoToggle = $("qgAuto"),
+      stopBtn = $("qgStop"), modeEl = $("qgMode"), keyBox = $("qgKeyBox"), keyInput = $("qgKeyInput");
+  var ICON_SEND = '<path d="M12 19V5"/><path d="m5 12 7-7 7 7"/>';
+  var ICON_STOP = '<rect x="6" y="6" width="12" height="12" rx="2" fill="currentColor"/>';
+  var ICON_LISTEN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg>';
+  var KEYBOARD_TIP = "Tip: tap the microphone key on your phone or computer keyboard to dictate into the box.";
+
+  function setStatus(msg, warn) { statusEl.textContent = msg || ""; statusEl.className = "qg-status" + (warn ? " warn" : ""); }
+
+  /* ---------- preferences ---------- */
+  var prefs = { speak: false, auto: true };
+  try {
+    var saved = JSON.parse(localStorage.getItem(PREF_STORE) || "{}");
+    if (typeof saved.speak === "boolean") prefs.speak = saved.speak;
+    if (typeof saved.auto === "boolean") prefs.auto = saved.auto;
+  } catch (e) {}
+  function savePrefs() { try { localStorage.setItem(PREF_STORE, JSON.stringify(prefs)); } catch (e) {} }
+  function paintToggles() {
+    speakToggle.setAttribute("aria-pressed", String(prefs.speak));
+    autoToggle.setAttribute("aria-pressed", String(prefs.auto));
+  }
+  paintToggles();
+  speakToggle.onclick = function () {
+    prefs.speak = !prefs.speak; paintToggles(); savePrefs();
+    if (!prefs.speak) stopSpeaking();
+    setStatus(prefs.speak ? "Answers will be read aloud." : "Voice answers are off.");
+  };
+  autoToggle.onclick = function () {
+    prefs.auto = !prefs.auto; paintToggles(); savePrefs();
+    setStatus(prefs.auto ? "Dictated questions are sent automatically." : "Dictated questions wait for you to press send.");
+  };
+
+  /* ---------- which answer engine is active ---------- */
+  function cfgKey() { return (CFG.apiKey || "").trim(); }
+  function userKey() { try { return localStorage.getItem(KEY_STORE) || ""; } catch (e) { return ""; } }
+  function mode() {
+    if (CFG.proxyUrl) return "proxy";
+    if (cfgKey()) return "key";
+    if (userKey()) return "user";
+    return "builtin";
+  }
+  function paintMode() {
+    var m = mode();
+    modeEl.textContent = m === "builtin" ? "Built-in answers" : "AI answers on";
+    modeEl.className = "qg-mode" + (m === "builtin" ? "" : " on");
+    keyBox.hidden = !!(CFG.proxyUrl || cfgKey());
+    $("qgKeyClear").hidden = m !== "user";
+    $("qgKeyState").textContent = m === "user" ? "A key is saved on this device." : "No key saved.";
+  }
+  $("qgKeyForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var k = keyInput.value.trim();
+    if (!/^sk-ant-/.test(k)) { setStatus("That does not look like an Anthropic API key. It should start with sk-ant-.", true); return; }
+    try { localStorage.setItem(KEY_STORE, k); } catch (err) { setStatus("This browser would not save the key.", true); return; }
+    keyInput.value = ""; paintMode(); setStatus("Key saved on this device. AI answers are on.");
+  });
+  $("qgKeyClear").addEventListener("click", function () {
+    try { localStorage.removeItem(KEY_STORE); } catch (e) {}
+    paintMode(); setStatus("Key removed. QuakeGuard is using its built-in answers.");
+  });
+  paintMode();
+
+  /* ---------- live earthquake data ---------- */
+  var feedCache = {};
+  async function feedByUrl(url, signal) {
+    var c = feedCache[url];
+    if (c && Date.now() - c.at < 60000) return c.data;
+    var inner = new AbortController(), to = setTimeout(function () { inner.abort(); }, 12000);
+    if (signal) signal.addEventListener("abort", function () { inner.abort(); });
+    try {
+      var r = await fetch(url, { signal: inner.signal });
+      if (!r.ok) throw new Error("USGS responded " + r.status);
+      var d = QuakeEngine.parseFeed(await r.json());
+      d.fetchedAt = Date.now();
+      feedCache[url] = { at: d.fetchedAt, data: d };
+      return d;
+    } finally { clearTimeout(to); }
+  }
+  function getFeed(key, signal) { return feedByUrl(QuakeEngine.FEEDS[key].url, signal); }
+  function getLocation() {
+    return new Promise(function (resolve, reject) {
+      if (!navigator.geolocation) return reject(new Error("unsupported"));
+      navigator.geolocation.getCurrentPosition(function (p) { resolve({ lat: p.coords.latitude, lon: p.coords.longitude }); }, reject, { timeout: 10000, maximumAge: 600000 });
+    });
+  }
+  function engineHelpers(signal) { return { fetchFeed: function (k) { return getFeed(k, signal); }, getLocation: getLocation }; }
+  function kmDist(a, b, c, d) {
+    var R = 6371, r = Math.PI / 180, dLat = (c - a) * r, dLon = (d - b) * r;
+    var h = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(a * r) * Math.cos(c * r) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    return 2 * R * Math.asin(Math.sqrt(h));
+  }
+  function evLine(r, now) {
+    return "M" + Number(r.mag).toFixed(1) + " | " + r.place + " | " + QuakeEngine.fmtUTC(r.time) + " (" + QuakeEngine.agoText(r.time, now) + ") | depth " +
+      (r.depth == null ? "unknown" : Math.max(0, Math.round(r.depth)) + " km") +
+      (r.tsunami ? " | tsunami flag set" : "") + (r.alert ? " | PAGER alert " + r.alert : "") + (r.felt ? " | " + r.felt + " felt reports" : "");
+  }
+  function newest(a, b) { return b.time - a.time; }
+
+  /* everything the AI is given about current earthquakes, fetched fresh for each question */
+  async function buildContext(text, signal) {
+    var now = Date.now(), parts = [], fetchedAt = 0, day = null, sig = null;
+    try { day = await getFeed("day", signal); } catch (e) { if (signal && signal.aborted) throw e; }
+    try { sig = await feedByUrl(SIG_URL, signal); } catch (e) { if (signal && signal.aborted) throw e; }
+    if (!day) {
+      parts.push("EARTHQUAKE DATA\nThe live USGS feed could not be reached just now, so there is no current data. Say so plainly, do not guess about current events, and point the user to earthquake.usgs.gov.");
+    } else {
+      fetchedAt = day.fetchedAt;
+      var rows = day.rows.slice().sort(newest);
+      parts.push(["EARTHQUAKE DATA from the USGS",
+        "Source: live USGS feed, fetched " + QuakeEngine.fmtUTC(day.fetchedAt),
+        "Feed generated: " + QuakeEngine.fmtUTC(day.generated),
+        "Current time: " + QuakeEngine.fmtUTC(now), "",
+        "All earthquakes of magnitude 2.5 or higher worldwide in the last 24 hours (" + rows.length + ", newest first" + (rows.length > 250 ? ", showing the newest 250" : "") + "):"
+      ].concat(rows.slice(0, 250).map(function (r) { return evLine(r, now); })).join("\n"));
+      if (sig && sig.rows.length) {
+        parts.push("Significant earthquakes in the last 7 days (USGS selection):\n" + sig.rows.slice().sort(newest).slice(0, 15).map(function (r) { return evLine(r, now); }).join("\n"));
+      }
+    }
+    var t = QuakeEngine._t.prep(text);
+    var wantsNear = /\b(near me|nearby|around me|close to me|near here|around here|my location|my area)\b/.test(t);
+    if (day && wantsNear) {
+      try {
+        var loc = await getLocation();
+        var near = day.rows.filter(function (r) { return r.lat != null && kmDist(loc.lat, loc.lon, r.lat, r.lon) <= 500; }).sort(newest);
+        parts.push("Earthquakes within 500 km of the user's location (last 24 hours):\n" + (near.length ? near.slice(0, 10).map(function (r) { return evLine(r, now); }).join("\n") : "none listed"));
+      } catch (e) { parts.push("The user asked about their own location but the browser did not share it. Ask them to name a city or country instead."); }
+    } else if (day && QuakeEngine._t.isLive(t)) {
+      try {
+        var pre = await QuakeEngine.answer(text, engineHelpers(signal));
+        parts.push("COMPUTED RESULT for this exact question, calculated by the page from the USGS feed (prefer it over the lists above and keep its numbers):\n" + pre.text);
+      } catch (e) { if (signal && signal.aborted) throw e; }
+    }
+    return { text: parts.join("\n\n"), fetchedAt: fetchedAt };
+  }
+
+  /* ---------- calling Claude ---------- */
+  async function askClaude(system, messages, signal) {
+    var body = JSON.stringify({ model: MODEL, max_tokens: 700, system: system, messages: messages });
+    var url, headers = { "content-type": "application/json" };
+    if (CFG.proxyUrl) { url = CFG.proxyUrl; }
+    else {
+      url = "https://api.anthropic.com/v1/messages";
+      headers["x-api-key"] = cfgKey() || userKey();
+      headers["anthropic-version"] = "2023-06-01";
+      headers["anthropic-dangerous-direct-browser-access"] = "true";
+    }
+    var r = await fetch(url, { method: "POST", headers: headers, body: body, signal: signal });
+    if (!r.ok) {
+      var detail = ""; try { detail = (await r.text()).slice(0, 400); } catch (e) {}
+      var err = new Error("api " + r.status); err.status = r.status; err.detail = detail; throw err;
+    }
+    var j = await r.json();
+    var text = (j.content || []).filter(function (b) { return b.type === "text"; }).map(function (b) { return b.text; }).join("\n").trim();
+    if (!text) { var e2 = new Error("empty"); e2.status = 0; e2.detail = "empty"; throw e2; }
+    return text;
+  }
+  function explain(e) {
+    var s = e && e.status, d = (e && e.detail) || "";
+    if (s === 401) return "The API key was rejected. Check that it is correct and still active.";
+    if (s === 403) return "This key is not allowed to use QuakeGuard's model, or the request was blocked.";
+    if (s === 404) return "The model name was not found. Check the model setting at the top of the page.";
+    if (s === 400 && /credit/i.test(d)) return "The Anthropic account has no credit left. Add credit and try again.";
+    if (s === 400) return "The request was refused. Try rewording your question.";
+    if (s === 429) return "Too many questions or the usage limit was reached. Wait a moment, then ask again.";
+    if (s >= 500) return "The AI service is busy right now. Try again in a moment.";
+    if (e && e.detail === "empty") return "No answer came back. Try rewording your question.";
+    return CFG.proxyUrl ? "Could not reach your proxy server. Check the address in the settings at the top of the page." : "Could not reach the AI service. Check your internet connection and try again.";
+  }
+  var FETCH_ERR = "I could not reach the USGS earthquake feed. Check your internet connection and try again.";
+
+  /* ---------- text helpers ---------- */
+  function esc(s) { return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+  function inline(s) { return esc(s).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>"); }
+  function md(t) {
+    var out = "", list = null;
+    function close() { if (list) { out += "</" + list + ">"; list = null; } }
+    t.split("\n").forEach(function (raw) {
+      var l = raw.replace(/\s+$/, ""), m;
+      if ((m = l.match(/^\s*[-*\u2022]\s+(.*)/))) { if (list !== "ul") { close(); out += "<ul>"; list = "ul"; } out += "<li>" + inline(m[1]) + "</li>"; }
+      else if ((m = l.match(/^\s*\d+[.)]\s+(.*)/))) { if (list !== "ol") { close(); out += "<ol>"; list = "ol"; } out += "<li>" + inline(m[1]) + "</li>"; }
+      else if (!l.trim()) { close(); }
+      else { close(); out += "<p>" + inline(l.replace(/^#+\s*/, "")) + "</p>"; }
+    });
+    close(); return out;
+  }
+  function plain(t) { return t.replace(/[*_#`>]/g, "").replace(/^\s*[-\u2022]\s+/gm, "").replace(/\s*\n+\s*/g, ". ").replace(/\.\s*\./g, ".").trim(); }
+
+  /* ---------- speaking answers aloud ---------- */
+  var synth = window.speechSynthesis || null, LANG = navigator.language || "en-US", voice = null, speakToken = 0;
+  function pickVoice() {
+    if (!synth) return;
+    var vs = synth.getVoices();
+    voice = vs.find(function (v) { return v.lang === LANG; }) || vs.find(function (v) { return v.lang && v.lang.indexOf(LANG.split("-")[0]) === 0; }) || null;
+  }
+  if (synth) { pickVoice(); synth.onvoiceschanged = pickVoice; }
+  function setSpeaking(on) { stopBtn.hidden = !on; }
+  function speak(text) {
+    if (!synth) { setStatus("Reading aloud is not supported in this browser.", true); return; }
+    synth.cancel();
+    var chunks = (plain(text).match(/[^.!?]+[.!?]*/g) || []).map(function (s) { return s.trim(); }).filter(Boolean);
+    if (!chunks.length) return;
+    var token = ++speakToken;
+    chunks.forEach(function (c, i) {
+      var u = new SpeechSynthesisUtterance(c);
+      u.lang = LANG; if (voice) u.voice = voice;
+      if (i === 0) u.onstart = function () { if (token === speakToken) setSpeaking(true); };
+      var done = function () { if (token === speakToken && i === chunks.length - 1) setSpeaking(false); };
+      u.onend = done; u.onerror = done;
+      synth.speak(u);
+    });
+  }
+  function stopSpeaking() { speakToken++; if (synth) synth.cancel(); setSpeaking(false); }
+  stopBtn.onclick = stopSpeaking;
+  window.addEventListener("pagehide", stopSpeaking);
+
+  /* ---------- dictation ---------- */
+  var SR = window.SpeechRecognition || window.webkitSpeechRecognition, rec = null, listening = false, micFailed = false;
+  if (!SR) micBtn.title = "Dictation is not available in this browser";
+  micBtn.onclick = function () {
+    if (!SR) { setStatus("Dictation is not available in this browser or app. " + KEYBOARD_TIP, true); return; }
+    if (listening) { rec.stop(); return; }
+    stopSpeaking();
+    var base = input.value.trim() ? input.value.trim() + " " : "";
+    micFailed = false;
+    rec = new SR(); rec.lang = LANG; rec.interimResults = true; rec.continuous = false;
+    rec.onstart = function () { listening = true; micBtn.classList.add("rec"); setStatus("Listening. Speak your question."); };
+    rec.onresult = function (e) {
+      var txt = ""; for (var i = 0; i < e.results.length; i++) txt += e.results[i][0].transcript;
+      input.value = base + txt; grow();
+    };
+    rec.onerror = function (e) {
+      micFailed = true;
+      var m = {
+        "not-allowed": "Microphone access is blocked. Allow it in your browser settings, or type your question.",
+        "service-not-allowed": "Microphone access is blocked. Allow it in your browser settings, or type your question.",
+        "no-speech": "No speech heard. Tap the mic and try again.",
+        "audio-capture": "No microphone found. Connect one, or type your question.",
+        "network": "Dictation needs an internet connection. Try again, or type your question."
+      };
+      if (e.error !== "aborted") setStatus((m[e.error] || "Dictation stopped.") + " [" + e.error + "] " + KEYBOARD_TIP, true);
+    };
+    rec.onend = function () {
+      listening = false; micBtn.classList.remove("rec");
+      if (!micFailed) {
+        if (input.value.trim() && prefs.auto) { setStatus(""); send(); }
+        else if (input.value.trim()) setStatus("Press send when you are ready.");
+        else setStatus("Nothing was heard. If this keeps happening, the microphone may be blocked here. " + KEYBOARD_TIP, true);
+      }
+    };
+    try { rec.start(); } catch (err) { setStatus("Could not start dictation. " + KEYBOARD_TIP, true); }
+  };
+
+  /* ---------- the conversation ---------- */
+  var turns = [], busy = false, ctl = null;
+  function scrollDown() { messagesEl.scrollTop = messagesEl.scrollHeight; }
+  function addUser(text) { var d = document.createElement("div"); d.className = "qg-msg user"; d.textContent = text; messagesEl.appendChild(d); scrollDown(); }
+  function addBot(html) {
+    var d = document.createElement("div"); d.className = "qg-msg bot";
+    var body = document.createElement("div"); body.innerHTML = html; d.appendChild(body);
+    messagesEl.appendChild(d); scrollDown();
+    return { el: d, body: body };
+  }
+  function addMeta(bot, text) { if (!text) return; var m = document.createElement("div"); m.className = "qg-meta"; m.textContent = text; bot.el.appendChild(m); }
+  function addListen(bot, text) {
+    var b = document.createElement("button"); b.type = "button"; b.className = "qg-listen";
+    b.innerHTML = ICON_LISTEN + "<span>Listen</span>"; b.onclick = function () { speak(text); };
+    bot.el.appendChild(b);
+  }
+
+  addBot("<p>Hi, I'm QuakeGuard. I'm here to answer earthquake-related queries.</p><p>Ask about earthquakes happening right now, earthquake safety, or how earthquakes work. Type a question, or tap the mic to dictate it.</p>");
+  var chips = document.createElement("div"); chips.className = "qg-chips";
+  ["What is the strongest earthquake in the last 24 hours?", "Any earthquakes near me?", "What should I do during an earthquake?", "What is the difference between magnitude and intensity?"].forEach(function (q) {
+    var c = document.createElement("button"); c.type = "button"; c.className = "qg-chip"; c.textContent = q;
+    c.onclick = function () { send(q); };
+    chips.appendChild(c);
+  });
+  messagesEl.appendChild(chips);
+  Array.prototype.forEach.call(document.querySelectorAll("[data-ask]"), function (b) {
+    b.addEventListener("click", function () { send(b.getAttribute("data-ask")); document.getElementById("qg").scrollIntoView({ block: "center" }); });
+  });
+
+  function recentTurns() {
+    var r = turns.slice(-12);
+    while (r.length && r[0].role !== "user") r.shift();
+    return r.map(function (t) { return { role: t.role, content: t.content }; });
+  }
+  function setBusy(on) {
+    busy = on;
+    sendIcon.innerHTML = on ? ICON_STOP : ICON_SEND;
+    sendBtn.setAttribute("aria-label", on ? "Stop answer" : "Send question");
+    sendBtn.title = on ? "Stop" : "Send";
+    micBtn.disabled = on;
+  }
+
+  async function send(preset) {
+    var text = (typeof preset === "string" ? preset : input.value).trim();
+    if (!text || busy) return;
+    stopSpeaking(); setStatus("");
+    if (chips.parentNode) chips.remove();
+    input.value = ""; grow();
+    addUser(text);
+    var bot = addBot('<span class="qg-dots" aria-label="QuakeGuard is thinking"><i></i><i></i><i></i></span>');
+    setBusy(true); ctl = new AbortController();
+    var useAI = mode() !== "builtin", pushed = false;
+    try {
+      var out;
+      if (!useAI) {
+        out = await QuakeEngine.answer(text, engineHelpers(ctl.signal));
+      } else {
+        turns.push({ role: "user", content: text }); pushed = true;
+        var ctx = await buildContext(text, ctl.signal);
+        var reply = await askClaude(RULES + "\n\n" + ctx.text, recentTurns(), ctl.signal);
+        turns.push({ role: "assistant", content: reply }); pushed = false;
+        out = { text: reply, meta: ctx.fetchedAt ? "Live USGS data, fetched " + QuakeEngine.fmtUTC(ctx.fetchedAt) + "." : "" };
+      }
+      bot.body.innerHTML = md(out.text);
+      addMeta(bot, out.meta);
+      addListen(bot, out.text);
+      if (prefs.speak) speak(out.text);
+    } catch (e) {
+      if (pushed) turns.pop();
+      if (ctl && ctl.signal.aborted) { bot.el.remove(); }
+      else { bot.el.classList.add("err"); bot.body.innerHTML = "<p>" + esc(useAI ? explain(e) : FETCH_ERR) + "</p>"; }
+    } finally {
+      setBusy(false); ctl = null; scrollDown();
+    }
+  }
+  sendBtn.onclick = function () { if (busy && ctl) ctl.abort(); else send(); };
+  input.addEventListener("keydown", function (e) { if (e.key === "Enter" && !e.shiftKey && !e.isComposing) { e.preventDefault(); send(); } });
+  function grow() { input.style.height = "auto"; input.style.height = Math.min(input.scrollHeight, 140) + "px"; }
+  input.addEventListener("input", grow);
+})();
+</script>
+<script>
+(function () {
+  "use strict";
+  var FEED = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_day.geojson";
+  function $(id) { return document.getElementById(id); }
+  function pad(n) { return n < 10 ? "0" + n : "" + n; }
+  function fmt(ms) {
+    var d = new Date(ms);
+    return d.getUTCFullYear() + "-" + pad(d.getUTCMonth() + 1) + "-" + pad(d.getUTCDate()) + " " + pad(d.getUTCHours()) + ":" + pad(d.getUTCMinutes()) + " UTC";
+  }
+  function ago(ms) {
+    var m = Math.max(0, Math.round((Date.now() - ms) / 60000));
+    if (m < 60) return m + " min ago";
+    return Math.floor(m / 60) + " h " + (m % 60) + " min ago";
+  }
+
+  /* live figures from the USGS */
+  var activity = 0.3;
+  async function load() {
+    var c = new AbortController(), to = setTimeout(function () { c.abort(); }, 10000);
+    try {
+      var r = await fetch(FEED, { signal: c.signal });
+      if (!r.ok) throw new Error("http " + r.status);
+      var j = await r.json();
+      var f = j.features.filter(function (x) { return x.properties && x.properties.mag != null; });
+      if (!f.length) { $("statCount").textContent = "0"; $("statUpdated").textContent = "No earthquakes of M2.5 or higher in the last 24 hours."; return; }
+      var strongest = f.reduce(function (a, b) { return b.properties.mag > a.properties.mag ? b : a; });
+      var latest = f.reduce(function (a, b) { return b.properties.time > a.properties.time ? b : a; });
+      $("statCount").textContent = f.length;
+      $("statStrong").textContent = "M" + Number(strongest.properties.mag).toFixed(1);
+      $("capStrong").textContent = "strongest, " + (strongest.properties.place || "unknown location");
+      $("statLatest").textContent = "M" + Number(latest.properties.mag).toFixed(1);
+      $("capLatest").textContent = "latest, " + (latest.properties.place || "unknown location") + ", " + ago(latest.properties.time);
+      $("statUpdated").textContent = "Live from the USGS, updated " + fmt(Date.now()) + ".";
+      activity = Math.min(1, f.length / 120);
+    } catch (e) {
+      $("statUpdated").textContent = "Live figures are unavailable right now. Check your connection. The sections below still work.";
+    } finally { clearTimeout(to); }
+  }
+  load(); setInterval(load, 120000);
+
+  /* seismograph strip: busier when more earthquakes were recorded */
+  var canvas = $("trace"), ctx = canvas.getContext("2d");
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var W = 0, H = 0, samples = [], amp = 0.1, t = 0, spike = 0, colors = { line: "#d1342f", mid: "#c2d0d4" };
+  function readColors() {
+    var cs = getComputedStyle(document.documentElement);
+    colors.line = cs.getPropertyValue("--trace").trim() || colors.line;
+    colors.mid = cs.getPropertyValue("--line").trim() || colors.mid;
+  }
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    ctx.strokeStyle = colors.mid; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(0, H / 2); ctx.lineTo(W, H / 2); ctx.stroke();
+    ctx.strokeStyle = colors.line; ctx.lineWidth = 1.8; ctx.lineJoin = "round"; ctx.beginPath();
+    for (var i = 0; i < samples.length; i++) {
+      var x = i * 2, y = H / 2 + samples[i] * (H * 0.46);
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+  }
+  function resize() {
+    var r = canvas.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
+    W = Math.max(1, Math.floor(r.width)); H = Math.max(1, Math.floor(r.height));
+    canvas.width = W * dpr; canvas.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    samples = new Array(Math.ceil(W / 2) + 2).fill(0);
+    if (reduce) for (var i = 0; i < samples.length; i++) samples[i] = Math.sin(i * 0.35) * 0.12 + (Math.sin(i * 1.9) * 0.05);
+    readColors(); draw();
+  }
+  function next() {
+    var target = 0.1 + activity * 0.3;
+    amp += (target - amp) * 0.05; t += 0.35;
+    if (Math.abs(spike) > 0.05) spike *= 0.82;
+    else if (Math.random() < 0.01 + activity * 0.05) spike = (Math.random() < 0.5 ? -1 : 1) * (0.4 + Math.random() * 0.6);
+    else spike = 0;
+    return (Math.sin(t * 1.7) * 0.25 + (Math.random() - 0.5) * 0.9 + spike * 1.8) * amp;
+  }
+  var last = 0;
+  function frame(ts) {
+    if (ts - last > 30) { last = ts; samples.shift(); samples.push(next()); draw(); }
+    requestAnimationFrame(frame);
+  }
+  window.addEventListener("resize", resize);
+  try { window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function () { readColors(); draw(); }); } catch (e) {}
+  resize();
+  if (!reduce) requestAnimationFrame(frame);
 })();
 </script>
 </body>
